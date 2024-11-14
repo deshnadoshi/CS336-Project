@@ -1,6 +1,5 @@
 # CS336-Project
 ## Group 17 - Deshna Doshi, Palak Singh, Maria Jaral, Jasmine Hanjra
-___
 
 ### Part 2: Login Page
 
@@ -9,6 +8,7 @@ Design Specifications:
 - We assume that only Customers are allowed to Register
 - Registration requires a unique username and email
 - We assume that the username and password required to login to your mySQLServer is 'root' and 'root'
+- We have used the 'COLLATE' command to make the password case sensitive. For example, trains123 is not the same as TRAINS123
 - Please navigate to the following URL to access the web application: http://localhost: {your configured HTTP port number} /RailwayBooking/. For example, we used HTTP Port 8081, so the URL is: http://localhost:8081/RailwayBooking/. 
 
 #### *Valid Customer Login Information:*
