@@ -8,7 +8,6 @@
 </head>
 <body>
     <%
-        // Use a unique variable name to avoid conflict with existing variable names
         HttpSession currentSession = request.getSession(false);
         if (currentSession != null) {
             currentSession.invalidate();

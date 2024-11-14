@@ -8,8 +8,9 @@
 <head>
     <title>Login Process</title>
     <script>
-        function showAlert(message) {
+        function showAlertAndReload(message) {
             alert(message);
+            window.location.href = 'login.jsp'; 
         }
     </script>
 </head>
@@ -26,9 +27,9 @@
             String query = "";
             
             if ("customer".equals(userType)) {
-                query = "SELECT first_name, last_name FROM customers WHERE username = ? AND password = ?";
+                query = "SELECT first_name, last_name FROM customers WHERE LOWER(username) = LOWER(?) AND password = ?";
             } else if ("employee".equals(userType)) {
-                query = "SELECT first_name, last_name FROM employees WHERE username = ? AND password = ?";
+                query = "SELECT first_name, last_name FROM employees WHERE LOWER(username) = LOWER(?) AND password = ?";
             }
 
             PreparedStatement ps = con.prepareStatement(query);
@@ -41,14 +42,14 @@
                 String lastName = rs.getString("last_name");
                 response.sendRedirect("welcome.jsp?firstName=" + firstName + "&lastName=" + lastName);
             } else {
-                out.println("<script>showAlert('Invalid username or password for " + userType + "');</script>");
+                out.println("<script>showAlertAndReload('Invalid username or password for " + userType + "');</script>");
             }
 
             rs.close();
             ps.close();
             con.close();
         } catch (Exception e) {
-            out.println("Error: " + e.getMessage());
+            out.println("<script>showAlertAndReload('Error: " + e.getMessage() + "');</script>");
         }
     %>
 </body>

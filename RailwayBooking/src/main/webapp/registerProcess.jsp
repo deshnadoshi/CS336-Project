@@ -8,8 +8,9 @@
 <head>
     <title>Registration Process</title>
     <script>
-        function showAlert(message) {
+        function showAlertAndRedirect(message) {
             alert(message);
+            window.location.href = 'login.jsp'; 
         }
     </script>
 </head>
@@ -21,32 +22,28 @@
         String password = request.getParameter("password");
         String email = request.getParameter("email");
 
-        // Simple validation (you can add more)
         if (firstName.length() > 20 || lastName.length() > 20 || username.length() > 10 || password.length() > 16 || email.length() > 50) {
-            out.println("<script>showAlert('Error: Input exceeds allowed length.');</script>");
+            out.println("<script>showAlertAndRedirect('Error: Input exceeds allowed length.');</script>");
         } else {
             try {
                 ApplicationDB db = new ApplicationDB();
                 Connection con = db.getConnection();
 
-                // Check if username already exists
                 String checkUsernameQuery = "SELECT * FROM customers WHERE username = ?";
                 PreparedStatement checkUsernameStmt = con.prepareStatement(checkUsernameQuery);
                 checkUsernameStmt.setString(1, username);
                 ResultSet rsUsername = checkUsernameStmt.executeQuery();
 
-                // Check if email already exists
                 String checkEmailQuery = "SELECT * FROM customers WHERE email = ?";
                 PreparedStatement checkEmailStmt = con.prepareStatement(checkEmailQuery);
                 checkEmailStmt.setString(1, email);
                 ResultSet rsEmail = checkEmailStmt.executeQuery();
 
                 if (rsUsername.next()) {
-                    out.println("<script>showAlert('Error: Username already exists.');</script>");
+                    out.println("<script>showAlertAndRedirect('Error: Username already exists.');</script>");
                 } else if (rsEmail.next()) {
-                    out.println("<script>showAlert('Error: Email already exists.');</script>");
+                    out.println("<script>showAlertAndRedirect('Error: Email already exists.');</script>");
                 } else {
-                    // Insert into the customers table
                     String insertQuery = "INSERT INTO customers (first_name, last_name, username, password, email) VALUES (?, ?, ?, ?, ?)";
                     PreparedStatement ps = con.prepareStatement(insertQuery);
                     ps.setString(1, firstName);
@@ -60,7 +57,7 @@
                     if (result > 0) {
                         response.sendRedirect("welcome.jsp?firstName=" + firstName + "&lastName=" + lastName);
                     } else {
-                        out.println("<script>showAlert('Error: Registration failed.');</script>");
+                        out.println("<script>showAlertAndRedirect('Error: Registration failed.');</script>");
                     }
 
                     ps.close();
@@ -72,7 +69,7 @@
                 checkEmailStmt.close();
                 con.close();
             } catch (SQLException e) {
-                out.println("<script>showAlert('Error: " + e.getMessage() + "');</script>");
+                out.println("<script>showAlertAndRedirect('Error: " + e.getMessage() + "');</script>");
             }
         }
     %>
