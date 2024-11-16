@@ -1,0 +1,148 @@
+/* General Styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #000; /* Black background */
+    color: #fff; /* White text for readability */
+    margin: 0;
+    padding: 0;
+}
+
+/* Fullscreen container for centering */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 20px;
+}
+
+/* Card-style form container */
+.form-container {
+    background: #1a1a1a; /* Dark gray for contrast */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    transition: 0.3s ease;
+}
+
+.form-container:hover {
+    box-shadow: 0 15px 25px rgba(255, 255, 255, 0.2);
+}
+
+/* Header styles */
+h1 {
+    font-size: 2.5rem;
+    color: #4CAF50; /* Bright green */
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 1.5rem;
+    color: #ddd; /* Light gray for subheaders */
+    margin-bottom: 25px;
+}
+
+/* Input styles */
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+    text-align: left;
+    color: #ccc; /* Light gray for labels */
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="submit"] {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border: 1px solid #333; /* Subtle border for dark mode */
+    border-radius: 8px;
+    background-color: #222; /* Darker background for inputs */
+    color: #fff; /* White text for contrast */
+    box-sizing: border-box;
+    font-size: 1rem;
+    transition: 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+/* Submit button */
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+    box-shadow: 0 5px 10px rgba(76, 175, 80, 0.3);
+}
+
+/* Radio button group */
+input[type="radio"] {
+    margin-right: 5px;
+}
+
+.radio-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+/* Logout button */
+.logout-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+}
+
+.logout-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #45a049;
+    box-shadow: 0 5px 10px rgba(76, 175, 80, 0.3);
+}
+
+/* Footer */
+footer {
+    margin-top: 30px;
+    color: #777; /* Lighter gray for footer */
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+/* Links */
+a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
