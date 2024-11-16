@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Login</title>
-    <link rel="stylesheet" href="Style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h2>Login</h2>
