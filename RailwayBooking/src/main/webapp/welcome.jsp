@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>Welcome</title>
+    <link rel="stylesheet" href="style.css">
     <script>
         function showLogoutAlert() {
             alert("You have been logged out successfully.");
@@ -10,11 +11,15 @@
     </script>
 </head>
 <body>
-    <h2>Hello, <%= request.getParameter("firstName") %> <%= request.getParameter("lastName") %>! You are successfully logged in!</h2>
+    <div class="logout-container">
+        <!-- Logout Button -->
+        <form action="logout.jsp" method="post">
+            <input type="submit" value="Logout" class="logout-button" onclick="showLogoutAlert();">
+        </form>
+    </div>
 
-    <!-- Logout Button -->
-    <form action="logout.jsp" method="post">
-        <input type="submit" value="Logout" onclick="showLogoutAlert();">
-    </form>
+    <h2 class="centered-message">
+        Hello, <%= request.getParameter("firstName") %> <%= request.getParameter("lastName") %>! You are successfully logged in!
+    </h2>
 </body>
 </html>

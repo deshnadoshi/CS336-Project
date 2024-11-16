@@ -7,6 +7,7 @@
 <html>
 <head>
     <title>Login Process</title>
+    <link rel="stylesheet" href="style.css">
     <script>
         function showAlertAndReload(message) {
             alert(message);
