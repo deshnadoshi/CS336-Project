@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Welcome</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="Style.css">
     <script>
         function showLogoutAlert() {
             alert("You have been logged out successfully.");
