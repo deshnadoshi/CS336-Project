@@ -3,30 +3,12 @@
 <html>
 <head>
     <title>Welcome</title>
+    <link rel="stylesheet" href="css/styles.css">
     <script>
         function showLogoutAlert() {
             alert("You have been logged out successfully.");
         }
     </script>
-    <style>
-        /* Style for the logout button container */
-        .logout-container {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-        }
-        /* Additional styling for the button */
-        .logout-button {
-            padding: 5px 10px;
-            font-size: 14px;
-            cursor: pointer;
-        }
-        /* Centering the hello message */
-        .centered-message {
-            text-align: center;
-            margin-top: 50px; /* Optional: Add some space from the top */
-        }
-    </style>
 </head>
 <body>
     <div class="logout-container">
