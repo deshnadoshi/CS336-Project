@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `railwaybooking` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `railwaybooking`;
--- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
 -- Host: localhost    Database: railwaybooking
 -- ------------------------------------------------------
--- Server version	8.0.35
+-- Server version	8.0.36
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -41,7 +41,7 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES ('dd1035','trains123','Deshna','Doshi','dd1035@rutgers.edu'),('hihello','hellohi','Hi','Hello','hihello@gmail.com'),('hrithik','husband!','Hrithik','Roshan','hrithik@gmail.com'),('ps1173','trains456','Palak','Singh','ps1173@rutgers.edu');
+INSERT INTO `customers` VALUES ('dd1035','trains123','Deshna','Doshi','dd1035@rutgers.edu'),('ps1173','trains456','Palak','Singh','ps1173@rutgers.edu');
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -203,4 +203,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-18 14:34:49
+-- Dump completed on 2024-11-19 10:33:15
