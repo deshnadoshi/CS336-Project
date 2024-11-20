@@ -4,7 +4,7 @@
 <%@ page import="java.util.*" %>
 <%
     HttpSession currentsession = request.getSession(false);
-    if (session == null || session.getAttribute("username") == null) {
+    if (currentsession == null || currentsession.getAttribute("username") == null) {
         response.sendRedirect("login.jsp");
     }
 %>
@@ -199,6 +199,18 @@
 	                            }
 	                        %>
 	                    </ul>
+	                    
+						<form action="reserveTrain.jsp" method="post">
+							<input type="hidden" name="lineName" value="<%= schedule.get("lineName") %>">
+							<input type="hidden" name="origin" value="<%= schedule.get("originName") %>">
+							<input type="hidden" name="destination" value="<%= schedule.get("destinationName") %>">
+							<input type="hidden" name="date" value="<%= date %>">
+							<input type="hidden" name="departureTime" value="<%= schedule.get("trainDepartureTime") %>">
+							<input type="hidden" name="arrivalTime" value="<%= schedule.get("trainArrivalTime") %>">
+							<input type="hidden" name="fare" value="<%= schedule.get("fare") %>">
+							<input type="submit" value="Reserve">
+						</form>
+	                    
 	                </div>
 	    <%
 	            }
