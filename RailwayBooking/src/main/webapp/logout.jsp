@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>Logout</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="loginStyle.css">
 </head>
 <body>
     <%
