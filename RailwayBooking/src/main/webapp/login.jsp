@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Login</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="loginStyle.css">
 </head>
 <body>
     <h2>Login</h2>
@@ -25,7 +25,7 @@
 
     <br><br>
 
-    <h2>Register</h2>
+    <h2>New Customer Registration</h2>
     <form action="registerProcess.jsp" method="post">
         <label for="first_name">First Name:</label>
         <input type="text" id="first_name" name="first_name" maxlength="20" required><br>

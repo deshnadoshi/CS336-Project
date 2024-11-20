@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Welcome</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="loginStyle.css">
     <script>
         function showLogoutAlert() {
             alert("You have been logged out successfully.");
@@ -21,5 +21,9 @@
     <h2 class="centered-message">
         Hello, <%= request.getParameter("firstName") %> <%= request.getParameter("lastName") %>! You are successfully logged in!
     </h2>
+    
+    <!-- Search Train Schedules Button -->
+    <a href="searchTrainSchedules.jsp" class="search-button">Search Train Schedules</a>
+    
 </body>
 </html>
