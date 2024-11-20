@@ -25,5 +25,6 @@ _Note_: The valid login information mentioned above is automatically populated i
 ___
 
 ### Part 3: Complete Website
+
 Design Specifications: 
 - 
