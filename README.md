@@ -23,3 +23,7 @@ Username: maria | Password: pword123
 _Note_: The valid login information mentioned above is automatically populated into the 'customers' and 'employees' tables (via INSERT statements) through our .sql file (create_db.sql). You may import this .sql file directly into mySQL to create the database and table schemas used in this project.
 
 ___
+
+### Part 3: Complete Website
+Design Specifications: 
+- 
