@@ -147,8 +147,8 @@ DROP TABLE IF EXISTS `stops_at`;
 CREATE TABLE `stops_at` (
   `line_name` varchar(50) NOT NULL,
   `station_id` int NOT NULL,
-  `stop_arrival_time` datetime DEFAULT NULL,
-  `stop_departure_time` datetime DEFAULT NULL,
+  `stop_arrival_time` time DEFAULT NULL,
+  `stop_departure_time` time DEFAULT NULL,
   PRIMARY KEY (`line_name`,`station_id`),
   KEY `station_id` (`station_id`),
   CONSTRAINT `stops_at_ibfk_1` FOREIGN KEY (`line_name`) REFERENCES `trainschedules` (`line_name`),
@@ -162,7 +162,7 @@ CREATE TABLE `stops_at` (
 
 LOCK TABLES `stops_at` WRITE;
 /*!40000 ALTER TABLE `stops_at` DISABLE KEYS */;
-INSERT INTO `stops_at` VALUES ('blue',1,'2024-11-19 08:00:00','2024-11-19 08:35:00'),('blue',2,'2024-11-19 09:05:00','2024-11-19 09:10:00'),('blue',3,'2024-11-19 09:40:00','2024-11-19 09:45:00'),('blue',4,'2024-11-19 10:15:00','2024-11-19 10:20:00'),('blue',5,'2024-11-19 10:50:00','2024-11-19 10:55:00'),('cyan',5,'2024-11-19 09:00:00','2024-11-19 09:35:00'),('cyan',6,'2024-11-19 10:05:00','2024-11-19 10:10:00'),('cyan',9,'2024-11-19 10:40:00','2024-11-19 10:45:00'),('cyan',11,'2024-11-19 11:15:00','2024-11-19 11:20:00'),('cyan',12,'2024-11-19 11:50:00','2024-11-19 11:55:00'),('cyan',14,'2024-11-19 12:25:00','2024-11-19 12:30:00'),('green',2,'2024-11-17 10:00:00','2024-11-17 10:35:00'),('green',6,'2024-11-17 11:05:00','2024-11-17 11:10:00'),('green',9,'2024-11-17 11:40:00','2024-11-17 11:45:00'),('indigo',3,'2024-11-16 11:00:00','2024-11-16 11:35:00'),('indigo',16,'2024-11-16 12:05:00','2024-11-16 12:10:00'),('orange',4,'2024-11-16 12:00:00','2024-11-16 12:35:00'),('orange',5,'2024-11-16 13:05:00','2024-11-16 13:10:00'),('orange',7,'2024-11-16 13:40:00','2024-11-16 13:45:00'),('orange',9,'2024-11-16 14:15:00','2024-11-16 14:20:00'),('orange',15,'2024-11-16 14:50:00','2024-11-16 14:55:00'),('orange',20,'2024-11-16 15:25:00','2024-11-16 15:30:00'),('purple',15,'2024-11-17 13:00:00','2024-11-17 13:35:00'),('purple',16,'2024-11-17 14:05:00','2024-11-17 14:10:00'),('purple',19,'2024-11-17 14:40:00','2024-11-17 14:45:00'),('purple',20,'2024-11-17 15:15:00','2024-11-17 15:20:00'),('red',4,'2024-11-18 14:00:00','2024-11-18 14:35:00'),('red',13,'2024-11-18 15:05:00','2024-11-18 15:10:00'),('red',15,'2024-11-18 15:40:00','2024-11-18 15:45:00'),('yellow',6,'2024-11-19 15:00:00','2024-11-19 15:35:00'),('yellow',8,'2024-11-19 16:05:00','2024-11-19 16:10:00'),('yellow',10,'2024-11-19 16:40:00','2024-11-19 16:45:00'),('yellow',11,'2024-11-19 17:15:00','2024-11-19 17:20:00'),('yellow',14,'2024-11-19 17:50:00','2024-11-19 17:55:00'),('yellow',16,'2024-11-19 18:25:00','2024-11-19 18:30:00'),('yellow',17,'2024-11-19 19:00:00','2024-11-19 19:05:00');
+INSERT INTO `stops_at` VALUES ('blue',1,'08:00:00','08:35:00'),('blue',2,'09:05:00','09:10:00'),('blue',3,'09:40:00','09:45:00'),('blue',4,'10:15:00','10:20:00'),('blue',5,'10:50:00','10:55:00'),('cyan',5,'09:00:00','09:35:00'),('cyan',6,'10:05:00','10:10:00'),('cyan',9,'10:40:00','10:45:00'),('cyan',11,'11:15:00','11:20:00'),('cyan',12,'11:50:00','11:55:00'),('cyan',14,'12:25:00','12:30:00'),('green',2,'10:00:00','10:35:00'),('green',6,'11:05:00','11:10:00'),('green',9,'11:40:00','11:45:00'),('indigo',3,'11:00:00','11:35:00'),('indigo',16,'12:05:00','12:10:00'),('orange',4,'12:00:00','12:35:00'),('orange',5,'13:05:00','13:10:00'),('orange',7,'13:40:00','13:45:00'),('orange',9,'14:15:00','14:20:00'),('orange',15,'14:50:00','14:55:00'),('orange',20,'15:25:00','15:30:00'),('purple',15,'13:00:00','13:35:00'),('purple',16,'14:05:00','14:10:00'),('purple',19,'14:40:00','14:45:00'),('purple',20,'15:15:00','15:20:00'),('red',4,'14:00:00','14:35:00'),('red',13,'15:05:00','15:10:00'),('red',15,'15:40:00','15:45:00'),('violet',1,'06:00:00','06:35:00'),('violet',2,'07:05:00','07:10:00'),('violet',3,'07:40:00','07:45:00'),('violet',4,'08:15:00','08:20:00'),('violet',5,'08:50:00','08:55:00'),('yellow',6,'15:00:00','15:35:00'),('yellow',8,'16:05:00','16:10:00'),('yellow',10,'16:40:00','16:45:00'),('yellow',11,'17:15:00','17:20:00'),('yellow',14,'17:50:00','17:55:00'),('yellow',16,'18:25:00','18:30:00'),('yellow',17,'19:00:00','19:05:00');
 /*!40000 ALTER TABLE `stops_at` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -188,7 +188,7 @@ CREATE TABLE `trains` (
 
 LOCK TABLES `trains` WRITE;
 /*!40000 ALTER TABLE `trains` DISABLE KEYS */;
-INSERT INTO `trains` VALUES (5,'blue'),(8,'cyan'),(4,'green'),(7,'indigo'),(2,'orange'),(6,'purple'),(1,'red'),(3,'yellow');
+INSERT INTO `trains` VALUES (5,'blue'),(8,'cyan'),(4,'green'),(7,'indigo'),(2,'orange'),(6,'purple'),(1,'red'),(9,'violet'),(3,'yellow');
 /*!40000 ALTER TABLE `trains` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -203,12 +203,12 @@ CREATE TABLE `trainschedules` (
   `line_name` varchar(50) NOT NULL,
   `num_stops` int DEFAULT NULL,
   `fare` int DEFAULT NULL,
-  `train_arrival_time` datetime DEFAULT NULL,
-  `train_departure_time` datetime DEFAULT NULL,
+  `train_arrival_time` datetime NOT NULL,
+  `train_departure_time` datetime NOT NULL,
   `travel_time` int DEFAULT NULL,
   `origin_stop_station_id` int DEFAULT NULL,
   `destination_stop_station_id` int DEFAULT NULL,
-  PRIMARY KEY (`line_name`),
+  PRIMARY KEY (`line_name`,`train_arrival_time`,`train_departure_time`),
   KEY `origin_stop_station_id` (`origin_stop_station_id`),
   KEY `destination_stop_station_id` (`destination_stop_station_id`),
   CONSTRAINT `trainschedules_ibfk_1` FOREIGN KEY (`origin_stop_station_id`) REFERENCES `stations` (`station_id`),
@@ -222,7 +222,7 @@ CREATE TABLE `trainschedules` (
 
 LOCK TABLES `trainschedules` WRITE;
 /*!40000 ALTER TABLE `trainschedules` DISABLE KEYS */;
-INSERT INTO `trainschedules` VALUES ('blue',5,20,'2024-11-19 10:50:00','2024-11-19 08:35:00',135,1,5),('cyan',6,30,'2024-11-19 12:25:00','2024-11-19 09:35:00',170,5,14),('green',3,27,'2024-11-17 11:40:00','2024-11-17 10:35:00',65,2,9),('indigo',2,40,'2024-11-16 12:05:00','2024-11-16 11:35:00',30,3,6),('orange',6,36,'2024-11-16 15:25:00','2024-11-16 12:35:00',170,4,20),('purple',4,48,'2024-11-17 15:15:00','2024-11-17 13:35:00',100,15,20),('red',3,18,'2024-11-18 15:40:00','2024-11-18 14:35:00',65,4,15),('yellow',7,49,'2024-11-19 19:00:00','2024-11-19 15:35:00',205,6,17);
+INSERT INTO `trainschedules` VALUES ('blue',5,20,'2024-11-19 10:50:00','2024-11-19 08:35:00',135,1,5),('cyan',6,30,'2024-11-19 12:25:00','2024-11-19 09:35:00',170,5,14),('green',3,27,'2024-11-17 11:40:00','2024-11-17 10:35:00',65,2,9),('indigo',2,40,'2024-11-16 12:05:00','2024-11-16 11:35:00',30,3,6),('indigo',2,40,'2024-11-23 12:05:00','2024-11-23 11:35:00',30,3,6),('orange',6,36,'2024-11-16 15:25:00','2024-11-16 12:35:00',170,4,20),('purple',4,48,'2024-11-17 15:15:00','2024-11-17 13:35:00',100,15,20),('red',3,18,'2024-11-18 15:40:00','2024-11-18 14:35:00',65,4,15),('violet',5,45,'2024-11-19 08:50:00','2024-11-19 06:35:00',135,1,5),('yellow',7,49,'2024-11-19 19:00:00','2024-11-19 15:35:00',205,6,17);
 /*!40000 ALTER TABLE `trainschedules` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -235,4 +235,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-19 11:42:08
+-- Dump completed on 2024-11-20 15:54:56
