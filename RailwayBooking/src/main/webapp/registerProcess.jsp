@@ -7,6 +7,7 @@
 <html>
 <head>
     <title>Registration Process</title>
+    <link rel="stylesheet" href="loginStyle.css">
     <script>
         function showAlertAndRedirect(message) {
             alert(message);

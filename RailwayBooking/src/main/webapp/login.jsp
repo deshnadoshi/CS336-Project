@@ -3,15 +3,23 @@
 <html>
 <head>
     <title>Login</title>
+    <link rel="stylesheet" href="loginStyle.css">
+    <style>
+        /* Optional: Add some CSS to improve layout */
+        .radio-label {
+            display: inline-block;
+            margin-right: 10px; /* Space between radio button and label */
+        }
+    </style>
 </head>
 <body>
     <h2>Login</h2>
     <form action="loginProcess.jsp" method="post">
         <label for="userType">Select User Type:</label><br>
         <input type="radio" id="customer" name="userType" value="customer" required>
-        <label for="customer">Customer</label><br>
+        <label class="radio-label" for="customer">Customer</label>
         <input type="radio" id="employee" name="userType" value="employee" required>
-        <label for="employee">Employee</label><br><br>
+        <label class="radio-label" for="employee">Employee</label><br><br>
         
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required><br>
@@ -24,7 +32,7 @@
 
     <br><br>
 
-    <h2>Register</h2>
+    <h2>New Customer Registration</h2>
     <form action="registerProcess.jsp" method="post">
         <label for="first_name">First Name:</label>
         <input type="text" id="first_name" name="first_name" maxlength="20" required><br>

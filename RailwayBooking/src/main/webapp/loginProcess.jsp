@@ -7,6 +7,7 @@
 <html>
 <head>
     <title>Login Process</title>
+    <link rel="stylesheet" href="loginStyle.css">
     <script>
         function showAlertAndReload(message) {
             alert(message);
@@ -40,6 +41,12 @@
             if (rs.next()) {
                 String firstName = rs.getString("first_name");
                 String lastName = rs.getString("last_name");
+
+                // Establish a session
+                HttpSession currentsession = request.getSession(true);
+                session.setAttribute("username", username); 
+                session.setAttribute("userType", userType); 
+
                 response.sendRedirect("welcome.jsp?firstName=" + firstName + "&lastName=" + lastName);
             } else {
                 out.println("<script>showAlertAndReload('Invalid username or password for " + userType + "');</script>");
