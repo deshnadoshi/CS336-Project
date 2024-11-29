@@ -69,7 +69,7 @@ CREATE TABLE `employees` (
 
 LOCK TABLES `employees` WRITE;
 /*!40000 ALTER TABLE `employees` DISABLE KEYS */;
-INSERT INTO `employees` VALUES (12345678,'Jasmine','Hanjra','jasmine','pwrod567'),(123456789,'Maria','Jaral','maria','pword123');
+INSERT INTO `employees` VALUES (111111111,'Administrator','Login','admin','admin'),(180121345,'Maria','Jaral','maria','pword123'),(190121345,'Jasmine','Hanjra','jasmine','pword456');
 /*!40000 ALTER TABLE `employees` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -235,4 +235,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-20 15:54:56
+-- Dump completed on 2024-11-20 18:17:22
