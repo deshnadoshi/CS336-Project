@@ -46,6 +46,8 @@
                 HttpSession currentsession = request.getSession(true);
                 session.setAttribute("username", username); 
                 session.setAttribute("userType", userType); 
+                session.setAttribute("firstName", firstName); 
+                session.setAttribute("lastName", lastName); 
 
                 response.sendRedirect("welcome.jsp?firstName=" + firstName + "&lastName=" + lastName);
             } else {
