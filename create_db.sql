@@ -90,7 +90,7 @@ CREATE TABLE `reservations` (
   `res_destination_station_id` int DEFAULT NULL,
   `line_name` varchar(50) DEFAULT NULL,
   `portfolio_username` varchar(10) DEFAULT NULL,
-  `status` varchar(50) DEFAULT NULL,
+  `status` varchar(50) DEFAULT 'CONFIRMED',
   PRIMARY KEY (`res_number`),
   KEY `res_origin_station_id` (`res_origin_station_id`),
   KEY `res_destination_station_id` (`res_destination_station_id`),
@@ -238,4 +238,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-01 21:10:18
+-- Dump completed on 2024-12-01 21:11:36
