@@ -85,11 +85,12 @@ CREATE TABLE `reservations` (
   `res_datetime` datetime DEFAULT NULL,
   `total_fare` float DEFAULT NULL,
   `is_roundtrip` tinyint(1) DEFAULT NULL,
-  `discount_type` varchar(1) DEFAULT NULL,
+  `discount_type` varchar(50) DEFAULT NULL,
   `res_origin_station_id` int DEFAULT NULL,
   `res_destination_station_id` int DEFAULT NULL,
   `line_name` varchar(50) DEFAULT NULL,
   `portfolio_username` varchar(10) DEFAULT NULL,
+  `status` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`res_number`),
   KEY `res_origin_station_id` (`res_origin_station_id`),
   KEY `res_destination_station_id` (`res_destination_station_id`),
@@ -108,6 +109,7 @@ CREATE TABLE `reservations` (
 
 LOCK TABLES `reservations` WRITE;
 /*!40000 ALTER TABLE `reservations` DISABLE KEYS */;
+INSERT INTO `reservations` VALUES (190126,'2024-11-29 13:38:10',20.25,0,'child',2,4,'violet','dd1035',NULL),(748730,'2024-12-01 21:01:30',24,1,'child',2,5,'blue','dd1035',NULL),(855049,'2024-11-29 13:37:57',27,1,'disabled',2,4,'violet','dd1035',NULL);
 /*!40000 ALTER TABLE `reservations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -236,4 +238,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-29 12:04:38
+-- Dump completed on 2024-12-01 21:10:18
