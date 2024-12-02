@@ -10,6 +10,8 @@
     }
 
     String username = (String) currentsession.getAttribute("username");
+    String firstName = (String) currentsession.getAttribute("firstName");
+    String lastName = (String) currentsession.getAttribute("lastName");
 
     // Initialize reservation form variables
     String lineName = request.getParameter("lineName");
@@ -50,7 +52,7 @@
         }
 
         if (isRoundtrip) {
-            totalFare *= 2;
+            totalFare *= 2; 
         }
 
         // Add reservation to the database
@@ -92,6 +94,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <form action="welcome.jsp" method="get" style="margin-bottom: 20px;">
+        <input type="hidden" name="firstName" value="<%= firstName %>">
+        <input type="hidden" name="lastName" value="<%= lastName %>">
+        <button type="submit">View Your Dashboard</button>
+    </form>
     <h2>Reserve Train</h2>
     <form action="reserveTrain.jsp" method="post">
         <label for="discountType">Discount Type:</label>
@@ -110,6 +117,8 @@
         <input type="hidden" name="departureTime" value="<%= departureTime %>">
         <input type="hidden" name="arrivalTime" value="<%= arrivalTime %>">
         <input type="hidden" name="fare" value="<%= fare %>">
+        <input type="hidden" name="firstName" value="<%= firstName %>">
+        <input type="hidden" name="lastName" value="<%= lastName %>">
         <input type="submit" value="Confirm Reservation">
     </form>
 
@@ -121,7 +130,7 @@
         <p>Line Name: <%= lineName %></p>
         <p>Origin Station: <%= origin %></p>
         <p>Destination Station:<%= destination %></p>
-        <p>Date of Travel: <%= date %></p>
+        <p>Date of Travel:<%= date %></p>
         <p>Departure Time: <%= departureTime %></p>
         <p>Arrival Time: <%= arrivalTime %></p>
         <p>Fare: $<%= totalFare %></p>
