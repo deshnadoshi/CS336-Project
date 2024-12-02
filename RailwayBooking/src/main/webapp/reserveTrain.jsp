@@ -24,7 +24,7 @@
 
     // Variables for reservation logic
     int resNumber = 0;
-    Timestamp resDatetime = null;
+    java.sql.Date resDate = null;
     String discountType = null;
     boolean isRoundtrip = false;
     float totalFare = fare;
@@ -33,56 +33,64 @@
 
     // Execute reservation logic only when the form is submitted (POST request with specific inputs)
     if ("POST".equalsIgnoreCase(request.getMethod()) && request.getParameter("discountType") != null) {
-        // Generate random reservation number and timestamp
+        // Generate random reservation number
         Random rand = new Random();
         resNumber = 100000 + rand.nextInt(900000);
-        resDatetime = new Timestamp(System.currentTimeMillis());
-
-        // Retrieve additional parameters
-        discountType = request.getParameter("discountType");
-        isRoundtrip = request.getParameter("isRoundtrip") != null;
-
-        // Calculate total fare based on discounts and roundtrip
-        if ("child".equals(discountType)) {
-            totalFare *= 0.75;
-        } else if ("senior".equals(discountType)) {
-            totalFare *= 0.65;
-        } else if ("disabled".equals(discountType)) {
-            totalFare *= 0.50;
-        }
-
-        if (isRoundtrip) {
-            totalFare *= 2; 
-        }
-
-        // Add reservation to the database
+        
+        // Parse the date
         try {
-            ApplicationDB db = new ApplicationDB();
-            Connection con = db.getConnection();
-            String insertQuery = "INSERT INTO reservations (res_number, res_datetime, total_fare, is_roundtrip, discount_type, res_origin_station_id, res_destination_station_id, line_name, portfolio_username) " +
-                                 "VALUES (?, ?, ?, ?, ?, (SELECT station_id FROM stations WHERE name = ?), (SELECT station_id FROM stations WHERE name = ?), ?, ?)";
-            PreparedStatement ps = con.prepareStatement(insertQuery);
-            ps.setInt(1, resNumber);
-            ps.setTimestamp(2, resDatetime);
-            ps.setFloat(3, totalFare);
-            ps.setBoolean(4, isRoundtrip);
-            ps.setString(5, discountType);
-            ps.setString(6, origin);
-            ps.setString(7, destination);
-            ps.setString(8, lineName);
-            ps.setString(9, username);
+            resDate = java.sql.Date.valueOf(date);
+        } catch (IllegalArgumentException e) {
+            message = "Error: Invalid date format.";
+        }
 
-            int result = ps.executeUpdate();
-            if (result > 0) {
-                reservationCreated = true;
-                message = "Reservation successful!";
-            } else {
-                message = "Reservation failed!";
+        if (resDate != null) {
+            // Retrieve additional parameters
+            discountType = request.getParameter("discountType");
+            isRoundtrip = request.getParameter("isRoundtrip") != null;
+
+            // Calculate total fare based on discounts and roundtrip
+            if ("child".equals(discountType)) {
+                totalFare *= 0.75;
+            } else if ("senior".equals(discountType)) {
+                totalFare *= 0.65;
+            } else if ("disabled".equals(discountType)) {
+                totalFare *= 0.50;
             }
-            ps.close();
-            con.close();
-        } catch (Exception e) {
-            message = "Error: " + e.getMessage();
+
+            if (isRoundtrip) {
+                totalFare *= 2;
+            }
+
+            // Add reservation to the database
+            try {
+                ApplicationDB db = new ApplicationDB();
+                Connection con = db.getConnection();
+                String insertQuery = "INSERT INTO reservations (res_number, res_datetime, total_fare, is_roundtrip, discount_type, res_origin_station_id, res_destination_station_id, line_name, portfolio_username) " +
+                                     "VALUES (?, ?, ?, ?, ?, (SELECT station_id FROM stations WHERE name = ?), (SELECT station_id FROM stations WHERE name = ?), ?, ?)";
+                PreparedStatement ps = con.prepareStatement(insertQuery);
+                ps.setInt(1, resNumber);
+                ps.setDate(2, resDate);
+                ps.setFloat(3, totalFare);
+                ps.setBoolean(4, isRoundtrip);
+                ps.setString(5, discountType);
+                ps.setString(6, origin);
+                ps.setString(7, destination);
+                ps.setString(8, lineName);
+                ps.setString(9, username);
+
+                int result = ps.executeUpdate();
+                if (result > 0) {
+                    reservationCreated = true;
+                    message = "Reservation successful!";
+                } else {
+                    message = "Reservation failed!";
+                }
+                ps.close();
+                con.close();
+            } catch (Exception e) {
+                message = "Error: " + e.getMessage();
+            }
         }
     }
 %>
@@ -126,7 +134,7 @@
         <h3><%= message %></h3>
         <h4>Reservation Details:</h4>
         <p>Reservation Number:<%= resNumber %></p>
-        <p>Reservation Date and Time: <%= resDatetime %></p>
+        <p>Reservation Date: <%= resDate %></p>
         <p>Line Name: <%= lineName %></p>
         <p>Origin Station: <%= origin %></p>
         <p>Destination Station:<%= destination %></p>
@@ -136,6 +144,8 @@
         <p>Fare: $<%= totalFare %></p>
         <p>Discount Type: <%= discountType != null ? discountType : "None" %></p>
         <p>Roundtrip:<%= isRoundtrip ? "Yes" : "No" %></p>
+    <% } else if (message != "") { %>
+        <h3><%= message %></h3>
     <% } %>
 </body>
 </html>
