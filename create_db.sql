@@ -82,7 +82,7 @@ DROP TABLE IF EXISTS `reservations`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `reservations` (
   `res_number` int NOT NULL,
-  `res_datetime` datetime DEFAULT NULL,
+  `res_datetime` date DEFAULT NULL,
   `total_fare` float DEFAULT NULL,
   `is_roundtrip` tinyint(1) DEFAULT NULL,
   `discount_type` varchar(50) DEFAULT NULL,
@@ -109,7 +109,7 @@ CREATE TABLE `reservations` (
 
 LOCK TABLES `reservations` WRITE;
 /*!40000 ALTER TABLE `reservations` DISABLE KEYS */;
-INSERT INTO `reservations` VALUES (190126,'2024-11-29 13:38:10',20.25,0,'child',2,4,'violet','dd1035',NULL),(748730,'2024-12-01 21:01:30',24,1,'child',2,5,'blue','dd1035',NULL),(855049,'2024-11-29 13:37:57',27,1,'disabled',2,4,'violet','dd1035',NULL);
+INSERT INTO `reservations` VALUES (325655,'2024-12-01',18,0,'',2,6,'green','ps1173','CONFIRMED'),(463725,'2024-12-01',20.8,1,'senior',1,4,'blue','dd1035','CANCELLED'),(802944,'2024-12-01',24,1,'child',1,4,'blue','dd1035','CONFIRMED');
 /*!40000 ALTER TABLE `reservations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -238,4 +238,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-01 21:11:36
+-- Dump completed on 2024-12-02 11:58:06
