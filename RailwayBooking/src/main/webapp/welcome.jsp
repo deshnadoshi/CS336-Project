@@ -45,14 +45,14 @@
                                   "FROM reservations r " +
                                   "JOIN stations s1 ON r.res_origin_station_id = s1.station_id " +
                                   "JOIN stations s2 ON r.res_destination_station_id = s2.station_id " +
-                                  "WHERE r.portfolio_username = ? AND r.status = 'CONFIRMED'";
+                                  "WHERE r.portfolio_username = ? AND r.status = 'CONFIRMED' AND r.res_datetime >= CURDATE()";
             PreparedStatement currentStmt = con.prepareStatement(currentQuery);
             currentStmt.setString(1, username);
             ResultSet currentRs = currentStmt.executeQuery();
             
             while (currentRs.next()) {
                 int resNumber = currentRs.getInt("res_number");
-                String resDatetime = currentRs.getTimestamp("res_datetime").toString();
+                String resDatetime = currentRs.getDate("res_datetime").toString();
                 float totalFare = currentRs.getFloat("total_fare");
                 boolean isRoundtrip = currentRs.getBoolean("is_roundtrip");
                 String discountType = currentRs.getString("discount_type");
@@ -63,7 +63,7 @@
     %>
                 <div class="reservation">
                     <p><strong>Reservation Number:</strong> <%= resNumber %></p>
-                    <p><strong>Reservation Date and Time:</strong> <%= resDatetime %></p>
+                    <p><strong>Reservation Date:</strong> <%= resDatetime %></p>
                     <p><strong>Line Name:</strong> <%= lineName %></p>
                     <p><strong>Origin Station:</strong> <%= originName %></p>
                     <p><strong>Destination Station:</strong> <%= destinationName %></p>
@@ -94,14 +94,14 @@
                                "FROM reservations r " +
                                "JOIN stations s1 ON r.res_origin_station_id = s1.station_id " +
                                "JOIN stations s2 ON r.res_destination_station_id = s2.station_id " +
-                               "WHERE r.portfolio_username = ? AND r.status <> 'CONFIRMED'";
+                               "WHERE r.portfolio_username = ? AND (r.status = 'CANCELLED' OR r.res_datetime < CURDATE())";
             PreparedStatement pastStmt = con.prepareStatement(pastQuery);
             pastStmt.setString(1, username);
             ResultSet pastRs = pastStmt.executeQuery();
             
             while (pastRs.next()) {
                 int resNumber = pastRs.getInt("res_number");
-                String resDatetime = pastRs.getTimestamp("res_datetime").toString();
+                String resDatetime = pastRs.getDate("res_datetime").toString();
                 float totalFare = pastRs.getFloat("total_fare");
                 boolean isRoundtrip = pastRs.getBoolean("is_roundtrip");
                 String discountType = pastRs.getString("discount_type");
@@ -112,7 +112,7 @@
     %>
                 <div class="reservation">
                     <p><strong>Reservation Number:</strong> <%= resNumber %></p>
-                    <p><strong>Reservation Date and Time:</strong> <%= resDatetime %></p>
+                    <p><strong>Reservation Date:</strong> <%= resDatetime %></p>
                     <p><strong>Line Name:</strong> <%= lineName %></p>
                     <p><strong>Origin Station:</strong> <%= originName %></p>
                     <p><strong>Destination Station:</strong> <%= destinationName %></p>
