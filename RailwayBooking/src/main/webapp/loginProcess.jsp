@@ -27,10 +27,11 @@
             
             String query = "";
             
+            // Determine the query based on user type
             if ("customer".equals(userType)) {
                 query = "SELECT first_name, last_name FROM customers WHERE LOWER(username) = LOWER(?) AND password = ?";
             } else if ("employee".equals(userType)) {
-                query = "SELECT first_name, last_name FROM employees WHERE LOWER(username) = LOWER(?) AND password = ?";
+                query = "SELECT first_name, last_name, is_admin FROM employees WHERE LOWER(username) = LOWER(?) AND password = ?";
             }
 
             PreparedStatement ps = con.prepareStatement(query);
@@ -42,6 +43,12 @@
                 String firstName = rs.getString("first_name");
                 String lastName = rs.getString("last_name");
 
+                // If the user is an employee, check if they are an admin
+                boolean isAdmin = false;
+                if ("employee".equals(userType)) {
+                    isAdmin = rs.getBoolean("is_admin");
+                }
+
                 // Establish a session
                 HttpSession currentsession = request.getSession(true);
                 currentsession.setAttribute("username", username); 
@@ -49,14 +56,21 @@
                 currentsession.setAttribute("firstName", firstName); 
                 currentsession.setAttribute("lastName", lastName); 
 
+                // Redirect based on user type and admin status
                 if ("customer".equals(userType)) {
                     // Redirect customer to the welcome page
                     response.sendRedirect("welcome.jsp?firstName=" + firstName + "&lastName=" + lastName);
                 } else if ("employee".equals(userType)) {
-                    // Redirect employee to their dashboard page
-                    response.sendRedirect("employeeDashboard.jsp?firstName=" + firstName + "&lastName=" + lastName);
+                    if (isAdmin) {
+                        // Redirect to admin dashboard if the employee is an admin
+                        response.sendRedirect("adminDashboard.jsp?firstName=" + firstName + "&lastName=" + lastName);
+                    } else {
+                        // Redirect to customer representative dashboard if not an admin
+                        response.sendRedirect("custRepDashboard.jsp?firstName=" + firstName + "&lastName=" + lastName);
+                    }
                 }
             } else {
+                // Show an alert and reload if login fails
                 out.println("<script>showAlertAndReload('Invalid username or password for " + userType + "');</script>");
             }
 
@@ -64,6 +78,7 @@
             ps.close();
             con.close();
         } catch (Exception e) {
+            // Show an alert if there is any error
             out.println("<script>showAlertAndReload('Error: " + e.getMessage() + "');</script>");
         }
     %>
