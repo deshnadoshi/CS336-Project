@@ -58,6 +58,7 @@ CREATE TABLE `employees` (
   `last_name` varchar(45) DEFAULT NULL,
   `username` varchar(45) NOT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `is_admin` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`ssn`),
   UNIQUE KEY `username_UNIQUE` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -69,7 +70,7 @@ CREATE TABLE `employees` (
 
 LOCK TABLES `employees` WRITE;
 /*!40000 ALTER TABLE `employees` DISABLE KEYS */;
-INSERT INTO `employees` VALUES (111111111,'Administrator','Login','admin','admin'),(180121345,'Maria','Jaral','maria','pword123'),(190121345,'Jasmine','Hanjra','jasmine','pword456');
+INSERT INTO `employees` VALUES (111111111,'Administrator','Login','admin','admin',1),(180121345,'Maria','Jaral','maria','pword123',0),(190121345,'Jasmine','Hanjra','jasmine','pword456',0);
 /*!40000 ALTER TABLE `employees` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,14 +83,15 @@ DROP TABLE IF EXISTS `reservations`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `reservations` (
   `res_number` int NOT NULL,
-  `res_datetime` datetime DEFAULT NULL,
+  `res_datetime` date DEFAULT NULL,
   `total_fare` float DEFAULT NULL,
   `is_roundtrip` tinyint(1) DEFAULT NULL,
-  `discount_type` varchar(1) DEFAULT NULL,
+  `discount_type` varchar(50) DEFAULT NULL,
   `res_origin_station_id` int DEFAULT NULL,
   `res_destination_station_id` int DEFAULT NULL,
   `line_name` varchar(50) DEFAULT NULL,
   `portfolio_username` varchar(10) DEFAULT NULL,
+  `status` varchar(50) DEFAULT 'CONFIRMED',
   PRIMARY KEY (`res_number`),
   KEY `res_origin_station_id` (`res_origin_station_id`),
   KEY `res_destination_station_id` (`res_destination_station_id`),
@@ -108,6 +110,7 @@ CREATE TABLE `reservations` (
 
 LOCK TABLES `reservations` WRITE;
 /*!40000 ALTER TABLE `reservations` DISABLE KEYS */;
+INSERT INTO `reservations` VALUES (325655,'2024-12-01',18,0,'',2,6,'green','ps1173','CONFIRMED'),(463725,'2024-12-01',20.8,1,'senior',1,4,'blue','dd1035','CANCELLED'),(689491,'2024-11-19',15.6,1,'senior',2,4,'blue','ps1173','CONFIRMED'),(802944,'2024-12-01',24,1,'child',1,4,'blue','dd1035','CONFIRMED'),(919981,'2024-11-19',18,1,'child',2,4,'blue','ps1173','CONFIRMED');
 /*!40000 ALTER TABLE `reservations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,7 +166,7 @@ CREATE TABLE `stops_at` (
 
 LOCK TABLES `stops_at` WRITE;
 /*!40000 ALTER TABLE `stops_at` DISABLE KEYS */;
-INSERT INTO `stops_at` VALUES ('blue',1,'08:00:00','08:35:00',0),('blue',2,'09:05:00','09:10:00',1),('blue',3,'09:40:00','09:45:00',2),('blue',4,'10:15:00','10:20:00',3),('blue',5,'10:50:00','10:55:00',4),('cyan',5,'09:00:00','09:35:00',0),('cyan',6,'10:05:00','10:10:00',1),('cyan',9,'10:40:00','10:45:00',2),('cyan',11,'11:15:00','11:20:00',3),('cyan',12,'11:50:00','11:55:00',4),('cyan',14,'12:25:00','12:30:00',5),('green',2,'10:00:00','10:35:00',0),('green',6,'11:05:00','11:10:00',1),('green',9,'11:40:00','11:45:00',2),('indigo',3,'11:00:00','11:35:00',0),('indigo',16,'12:05:00','12:10:00',1),('orange',4,'12:00:00','12:35:00',1),('orange',5,'13:05:00','13:10:00',2),('orange',7,'13:40:00','13:45:00',3),('orange',9,'14:15:00','14:20:00',4),('orange',15,'14:50:00','14:55:00',5),('orange',20,'15:25:00','15:30:00',6),('purple',15,'13:00:00','13:35:00',0),('purple',16,'14:05:00','14:10:00',1),('purple',19,'14:40:00','14:45:00',2),('purple',20,'15:15:00','15:20:00',3),('red',4,'14:00:00','14:35:00',1),('red',13,'15:05:00','15:10:00',2),('red',15,'15:40:00','15:45:00',3),('violet',1,'06:00:00','06:35:00',0),('violet',2,'07:05:00','07:10:00',1),('violet',3,'07:40:00','07:45:00',2),('violet',4,'08:15:00','08:20:00',3),('violet',5,'08:50:00','08:55:00',4),('yellow',6,'15:00:00','15:35:00',0),('yellow',8,'16:05:00','16:10:00',1),('yellow',10,'16:40:00','16:45:00',2),('yellow',11,'17:15:00','17:20:00',3),('yellow',14,'17:50:00','17:55:00',4),('yellow',16,'18:25:00','18:30:00',5),('yellow',17,'19:00:00','19:05:00',6);
+INSERT INTO `stops_at` VALUES ('blue',1,'08:00:00','08:35:00',1),('blue',2,'09:05:00','09:10:00',2),('blue',3,'09:40:00','09:45:00',3),('blue',4,'10:15:00','10:20:00',4),('blue',5,'10:50:00','10:55:00',5),('cyan',5,'09:00:00','09:35:00',1),('cyan',6,'10:05:00','10:10:00',2),('cyan',9,'10:40:00','10:45:00',3),('cyan',11,'11:15:00','11:20:00',4),('cyan',12,'11:50:00','11:55:00',5),('cyan',14,'12:25:00','12:30:00',6),('green',2,'10:00:00','10:35:00',1),('green',6,'11:05:00','11:10:00',2),('green',9,'11:40:00','11:45:00',3),('indigo',3,'11:00:00','11:35:00',1),('indigo',16,'12:05:00','12:10:00',2),('orange',4,'12:00:00','12:35:00',1),('orange',5,'13:05:00','13:10:00',2),('orange',7,'13:40:00','13:45:00',3),('orange',9,'14:15:00','14:20:00',4),('orange',15,'14:50:00','14:55:00',5),('orange',20,'15:25:00','15:30:00',6),('purple',15,'13:00:00','13:35:00',1),('purple',16,'14:05:00','14:10:00',2),('purple',19,'14:40:00','14:45:00',3),('purple',20,'15:15:00','15:20:00',4),('red',4,'14:00:00','14:35:00',1),('red',13,'15:05:00','15:10:00',2),('red',15,'15:40:00','15:45:00',3),('violet',1,'06:00:00','06:35:00',1),('violet',2,'07:05:00','07:10:00',2),('violet',3,'07:40:00','07:45:00',3),('violet',4,'08:15:00','08:20:00',4),('violet',5,'08:50:00','08:55:00',5),('yellow',6,'15:00:00','15:35:00',1),('yellow',8,'16:05:00','16:10:00',2),('yellow',10,'16:40:00','16:45:00',3),('yellow',11,'17:15:00','17:20:00',4),('yellow',14,'17:50:00','17:55:00',5),('yellow',16,'18:25:00','18:30:00',6),('yellow',17,'19:00:00','19:05:00',7);
 /*!40000 ALTER TABLE `stops_at` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -240,4 +243,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-28 17:42:23
+-- Dump completed on 2024-12-03 18:46:04
