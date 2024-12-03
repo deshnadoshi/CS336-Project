@@ -4,22 +4,15 @@
 <head>
     <title>Login</title>
     <link rel="stylesheet" href="loginStyle.css">
-    <style>
-        /* Optional: Add some CSS to improve layout */
-        .radio-label {
-            display: inline-block;
-            margin-right: 10px; /* Space between radio button and label */
-        }
-    </style>
 </head>
 <body>
     <h2>Login</h2>
     <form action="loginProcess.jsp" method="post">
         <label for="userType">Select User Type:</label><br>
         <input type="radio" id="customer" name="userType" value="customer" required>
-        <label class="radio-label" for="customer">Customer</label>
+        <label for="customer">Customer</label><br>
         <input type="radio" id="employee" name="userType" value="employee" required>
-        <label class="radio-label" for="employee">Employee</label><br><br>
+        <label for="employee">Employee</label><br><br>
         
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required><br>
