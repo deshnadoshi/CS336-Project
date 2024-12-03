@@ -44,12 +44,18 @@
 
                 // Establish a session
                 HttpSession currentsession = request.getSession(true);
-                session.setAttribute("username", username); 
-                session.setAttribute("userType", userType); 
-                session.setAttribute("firstName", firstName); 
-                session.setAttribute("lastName", lastName); 
+                currentsession.setAttribute("username", username); 
+                currentsession.setAttribute("userType", userType); 
+                currentsession.setAttribute("firstName", firstName); 
+                currentsession.setAttribute("lastName", lastName); 
 
-                response.sendRedirect("welcome.jsp?firstName=" + firstName + "&lastName=" + lastName);
+                if ("customer".equals(userType)) {
+                    // Redirect customer to the welcome page
+                    response.sendRedirect("welcome.jsp?firstName=" + firstName + "&lastName=" + lastName);
+                } else if ("employee".equals(userType)) {
+                    // Redirect employee to their dashboard page
+                    response.sendRedirect("employeeDashboard.jsp?firstName=" + firstName + "&lastName=" + lastName);
+                }
             } else {
                 out.println("<script>showAlertAndReload('Invalid username or password for " + userType + "');</script>");
             }
