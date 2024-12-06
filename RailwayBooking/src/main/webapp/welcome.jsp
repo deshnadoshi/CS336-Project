@@ -75,6 +75,7 @@
                         <input type="submit" value="Cancel Reservation">
                     </form>
                 </div>
+                <hr> <!-- Divider between each current reservation -->
     <%
             }
             currentRs.close();
@@ -121,6 +122,7 @@
                     <p><strong>Roundtrip:</strong> <%= isRoundtrip ? "Yes" : "No" %></p>
                     <p><strong>Status:</strong> <%= status %></p>
                 </div>
+                <hr> <!-- Divider between each past reservation -->
     <%
             }
             pastRs.close();

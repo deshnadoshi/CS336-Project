@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `railwaybooking` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `railwaybooking`;
--- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: localhost    Database: railwaybooking
 -- ------------------------------------------------------
--- Server version	8.0.36
+-- Server version	8.0.35
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -58,6 +58,7 @@ CREATE TABLE `employees` (
   `last_name` varchar(45) DEFAULT NULL,
   `username` varchar(45) NOT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `is_admin` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`ssn`),
   UNIQUE KEY `username_UNIQUE` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -69,7 +70,7 @@ CREATE TABLE `employees` (
 
 LOCK TABLES `employees` WRITE;
 /*!40000 ALTER TABLE `employees` DISABLE KEYS */;
-INSERT INTO `employees` VALUES (111111111,'Administrator','Login','admin','admin'),(180121345,'Maria','Jaral','maria','pword123'),(190121345,'Jasmine','Hanjra','jasmine','pword456');
+INSERT INTO `employees` VALUES (111111111,'Administrator','Login','admin','admin',1),(180121345,'Maria','Jaral','maria','pword123',0),(190121345,'Jasmine','Hanjra','jasmine','pword456',0);
 /*!40000 ALTER TABLE `employees` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,14 +83,15 @@ DROP TABLE IF EXISTS `reservations`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `reservations` (
   `res_number` int NOT NULL,
-  `res_datetime` datetime DEFAULT NULL,
+  `res_datetime` date DEFAULT NULL,
   `total_fare` float DEFAULT NULL,
   `is_roundtrip` tinyint(1) DEFAULT NULL,
-  `discount_type` varchar(1) DEFAULT NULL,
+  `discount_type` varchar(50) DEFAULT NULL,
   `res_origin_station_id` int DEFAULT NULL,
   `res_destination_station_id` int DEFAULT NULL,
   `line_name` varchar(50) DEFAULT NULL,
   `portfolio_username` varchar(10) DEFAULT NULL,
+  `status` varchar(50) DEFAULT 'CONFIRMED',
   PRIMARY KEY (`res_number`),
   KEY `res_origin_station_id` (`res_origin_station_id`),
   KEY `res_destination_station_id` (`res_destination_station_id`),
@@ -108,6 +110,7 @@ CREATE TABLE `reservations` (
 
 LOCK TABLES `reservations` WRITE;
 /*!40000 ALTER TABLE `reservations` DISABLE KEYS */;
+INSERT INTO `reservations` VALUES (325655,'2024-12-01',18,0,'',2,6,'green','ps1173','CONFIRMED'),(463725,'2024-12-01',20.8,1,'senior',1,4,'blue','dd1035','CANCELLED'),(689491,'2024-11-19',15.6,1,'senior',2,4,'blue','ps1173','CONFIRMED'),(802944,'2024-12-01',24,1,'child',1,4,'blue','dd1035','CONFIRMED'),(919981,'2024-11-19',18,1,'child',2,4,'blue','ps1173','CONFIRMED');
 /*!40000 ALTER TABLE `reservations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -223,9 +226,13 @@ CREATE TABLE `trainschedules` (
 
 LOCK TABLES `trainschedules` WRITE;
 /*!40000 ALTER TABLE `trainschedules` DISABLE KEYS */;
-INSERT INTO `trainschedules` VALUES ('blue',5,20,'2024-11-19 10:50:00','2024-11-19 08:35:00',135,1,5),('cyan',6,30,'2024-11-19 12:25:00','2024-11-19 09:35:00',170,5,14),('green',3,27,'2024-11-17 11:40:00','2024-11-17 10:35:00',65,2,9),('indigo',2,40,'2024-11-16 12:05:00','2024-11-16 11:35:00',30,3,6),('indigo',2,40,'2024-11-23 12:05:00','2024-11-23 11:35:00',30,3,6),('orange',6,36,'2024-11-16 15:25:00','2024-11-16 12:35:00',170,4,20),('purple',4,48,'2024-11-17 15:15:00','2024-11-17 13:35:00',100,15,20),('red',3,18,'2024-11-18 15:40:00','2024-11-18 14:35:00',65,4,15),('violet',5,45,'2024-11-19 08:50:00','2024-11-19 06:35:00',135,1,5),('yellow',7,49,'2024-11-19 19:00:00','2024-11-19 15:35:00',205,6,17);
+INSERT INTO `trainschedules` VALUES ('blue',5,20,'2025-11-19 10:50:00','2025-11-19 08:35:00',135,1,5),('cyan',6,30,'2025-11-19 12:25:00','2025-11-19 09:35:00',170,5,14),('green',3,27,'2024-11-17 11:40:00','2024-11-17 10:35:00',65,2,9),('indigo',2,40,'2024-11-23 12:05:00','2024-11-23 11:35:00',30,3,6),('indigo',2,40,'2025-11-16 12:05:00','2025-11-16 11:35:00',30,3,6),('orange',6,36,'2025-11-16 15:25:00','2025-11-16 12:35:00',170,4,20),('purple',4,48,'2025-11-17 15:15:00','2025-11-17 13:35:00',100,15,20),('red',3,18,'2025-11-18 15:40:00','2025-11-18 14:35:00',65,4,15),('violet',5,45,'2024-11-19 08:50:00','2024-11-19 06:35:00',135,1,5),('yellow',7,49,'2024-11-19 19:00:00','2024-11-19 15:35:00',205,6,17);
 /*!40000 ALTER TABLE `trainschedules` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'railwaybooking'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -236,4 +243,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-29 12:04:38
+-- Dump completed on 2024-12-03 18:55:51
