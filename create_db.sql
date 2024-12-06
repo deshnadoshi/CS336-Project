@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `railwaybooking` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `railwaybooking`;
--- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
 -- Host: localhost    Database: railwaybooking
 -- ------------------------------------------------------
--- Server version	8.0.35
+-- Server version	8.0.36
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -229,10 +229,6 @@ LOCK TABLES `trainschedules` WRITE;
 INSERT INTO `trainschedules` VALUES ('blue',5,20,'2025-11-19 10:50:00','2025-11-19 08:35:00',135,1,5),('cyan',6,30,'2025-11-19 12:25:00','2025-11-19 09:35:00',170,5,14),('green',3,27,'2024-11-17 11:40:00','2024-11-17 10:35:00',65,2,9),('indigo',2,40,'2024-11-23 12:05:00','2024-11-23 11:35:00',30,3,6),('indigo',2,40,'2025-11-16 12:05:00','2025-11-16 11:35:00',30,3,6),('orange',6,36,'2025-11-16 15:25:00','2025-11-16 12:35:00',170,4,20),('purple',4,48,'2025-11-17 15:15:00','2025-11-17 13:35:00',100,15,20),('red',3,18,'2025-11-18 15:40:00','2025-11-18 14:35:00',65,4,15),('violet',5,45,'2024-11-19 08:50:00','2024-11-19 06:35:00',135,1,5),('yellow',7,49,'2024-11-19 19:00:00','2024-11-19 15:35:00',205,6,17);
 /*!40000 ALTER TABLE `trainschedules` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping routines for database 'railwaybooking'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -243,4 +239,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-03 18:55:51
+-- Dump completed on 2024-12-06 12:59:13

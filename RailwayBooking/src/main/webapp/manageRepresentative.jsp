@@ -20,140 +20,120 @@
         </form>
     </div>
 
-    <h2 class="centered-message">
-        Manage Customer Representatives
-    </h2>
+    <h2 class="centered-message">Manage Customer Representatives</h2>
 
     <!-- Action Selection -->
     <form action="manageRepresentative.jsp" method="get">
-        <h4>Select Action:</h4>
+        <h4>Please choose what you would like to do below.</h4>
+
         <label for="action">Action:</label>
         <select name="action" id="action" required>
             <option value="add">Add Representative</option>
             <option value="edit">Edit Representative</option>
             <option value="delete">Delete Representative</option>
         </select>
+
+        <label for="representative">Customer Representative:</label>
+        <select name="representative" id="representative">
+            <option value="">-- Select a Representative --</option>
+            <%
+                Connection conn = null;
+                PreparedStatement stmt = null;
+                ResultSet rs = null;
+
+                try {
+                    ApplicationDB db = new ApplicationDB(); // Create an instance of ApplicationDB
+                    conn = db.getConnection(); // Use the instance to get the connection
+                    String query = "SELECT ssn, first_name, last_name FROM employees WHERE is_admin = 0";
+                    stmt = conn.prepareStatement(query);
+                    rs = stmt.executeQuery();
+
+                    while (rs.next()) {
+                        int ssn = rs.getInt("ssn");
+                        String fullName = rs.getString("first_name") + " " + rs.getString("last_name");
+                        out.println("<option value='" + ssn + "'>" + fullName + "</option>");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
+                    if (stmt != null) try { stmt.close(); } catch (SQLException ignore) {}
+                    if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
+                }
+            %>
+        </select>
+
         <input type="submit" value="Select Action">
     </form>
-
-    <hr>
 
     <!-- Form for Adding, Editing, and Deleting Representatives -->
     <%
         String action = request.getParameter("action");
-        if ("add".equals(action)) {
+        String representativeSSN = request.getParameter("representative");
+
+        if ("add".equalsIgnoreCase(action)) {
     %>
         <h3>Add New Representative</h3>
-        <form action="manageRepresentative.jsp" method="post">
+        <form action="processManageRepresentative.jsp" method="post">
             <input type="hidden" name="action" value="add">
-            <label for="rep_name">Name:</label>
-            <input type="text" id="rep_name" name="rep_name" required>
-            <label for="rep_email">Email:</label>
-            <input type="email" id="rep_email" name="rep_email" required>
-            <label for="rep_phone">Phone Number:</label>
-            <input type="text" id="rep_phone" name="rep_phone" required>
+            <label for="ssn">SSN:</label><input type="text" name="ssn" required><br>
+            <label for="first_name">First Name:</label><input type="text" name="first_name" required><br>
+            <label for="last_name">Last Name:</label><input type="text" name="last_name" required><br>
+            <label for="username">Username:</label><input type="text" name="username" required><br>
+            <label for="password">Password:</label><input type="password" name="password" required><br>
+            <input type="hidden" name="is_admin" value="0">
             <input type="submit" value="Add Representative">
         </form>
     <%
-        } else if ("edit".equals(action)) {
+        } else if ("edit".equalsIgnoreCase(action) && representativeSSN != null && !representativeSSN.isEmpty()) {
+            try {
+                ApplicationDB db = new ApplicationDB(); // Create an instance of ApplicationDB
+                conn = db.getConnection(); // Use the instance to get the connection
+                String query = "SELECT * FROM employees WHERE ssn = ?";
+                stmt = conn.prepareStatement(query);
+                stmt.setInt(1, Integer.parseInt(representativeSSN));
+                rs = stmt.executeQuery();
+
+                if (rs.next()) {
     %>
         <h3>Edit Representative</h3>
-        <form action="manageRepresentative.jsp" method="post">
+        <form action="processManageRepresentative.jsp" method="post">
             <input type="hidden" name="action" value="edit">
-            <label for="rep_id">Representative ID:</label>
-            <input type="number" id="rep_id" name="rep_id" required>
-            <input type="submit" value="Edit Representative">
+            <input type="hidden" name="original_ssn" value="<%= rs.getInt("ssn") %>">
+            <label for="ssn">SSN:</label><input type="text" name="ssn" value="<%= rs.getInt("ssn") %>" required><br>
+            <label for="first_name">First Name:</label><input type="text" name="first_name" value="<%= rs.getString("first_name") %>" required><br>
+            <label for="last_name">Last Name:</label><input type="text" name="last_name" value="<%= rs.getString("last_name") %>" required><br>
+            <label for="username">Username:</label><input type="text" name="username" value="<%= rs.getString("username") %>" required><br>
+            <label for="password">Password:</label><input type="password" name="password" value="<%= rs.getString("password") %>" required><br>
+            <input type="hidden" name="is_admin" value="0">
+            <input type="submit" value="Update Representative">
         </form>
     <%
-        } else if ("delete".equals(action)) {
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
+                if (stmt != null) try { stmt.close(); } catch (SQLException ignore) {}
+                if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
+            }
+        } else if ("delete".equalsIgnoreCase(action) && representativeSSN != null && !representativeSSN.isEmpty()) {
     %>
         <h3>Delete Representative</h3>
-        <form action="manageRepresentative.jsp" method="post">
+        <form action="processManageRepresentative.jsp" method="post">
             <input type="hidden" name="action" value="delete">
-            <label for="rep_id_delete">Representative ID:</label>
-            <input type="number" id="rep_id_delete" name="rep_id_delete" required>
+            <input type="hidden" name="ssn" value="<%= representativeSSN %>">
+            <p>Are you sure you want to delete this representative?</p>
             <input type="submit" value="Delete Representative">
         </form>
     <%
         }
     %>
-
     <%
-        // Handling form submission for add, edit, delete actions
-        String actionPost = request.getParameter("action");
-        
-        if ("add".equals(actionPost)) {
-            String name = request.getParameter("rep_name");
-            String email = request.getParameter("rep_email");
-            String phone = request.getParameter("rep_phone");
-
-            ApplicationDB db = new ApplicationDB();
-            Connection con = db.getConnection();
-            String insertQuery = "INSERT INTO customer_representatives (name, email, phone) VALUES (?, ?, ?)";
-            PreparedStatement stmt = con.prepareStatement(insertQuery);
-            stmt.setString(1, name);
-            stmt.setString(2, email);
-            stmt.setString(3, phone);
-
-            int rowsAffected = stmt.executeUpdate();
-            if (rowsAffected > 0) {
-                out.println("<p>Representative added successfully!</p>");
-            } else {
-                out.println("<p>Error adding representative.</p>");
-            }
-            db.closeConnection(con);
-
-        } else if ("edit".equals(actionPost)) {
-            int repId = Integer.parseInt(request.getParameter("rep_id"));
-
-            ApplicationDB db = new ApplicationDB();
-            Connection con = db.getConnection();
-            String selectQuery = "SELECT * FROM customer_representatives WHERE id = ?";
-            PreparedStatement stmt = con.prepareStatement(selectQuery);
-            stmt.setInt(1, repId);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                String name = rs.getString("name");
-                String email = rs.getString("email");
-                String phone = rs.getString("phone");
-
-                // Display edit form
-                out.println("<h3>Edit Representative</h3>");
-                out.println("<form action='manageRepresentative.jsp' method='post'>");
-                out.println("<input type='hidden' name='action' value='update'>");
-                out.println("<input type='hidden' name='rep_id' value='" + repId + "'>");
-                out.println("<label for='edit_rep_name'>Name:</label>");
-                out.println("<input type='text' id='edit_rep_name' name='rep_name' value='" + name + "' required>");
-                out.println("<label for='edit_rep_email'>Email:</label>");
-                out.println("<input type='email' id='edit_rep_email' name='rep_email' value='" + email + "' required>");
-                out.println("<label for='edit_rep_phone'>Phone:</label>");
-                out.println("<input type='text' id='edit_rep_phone' name='rep_phone' value='" + phone + "' required>");
-                out.println("<input type='submit' value='Update Representative'>");
-                out.println("</form>");
-            } else {
-                out.println("<p>Representative not found.</p>");
-            }
-            db.closeConnection(con);
-
-        } else if ("delete".equals(actionPost)) {
-            int repId = Integer.parseInt(request.getParameter("rep_id_delete"));
-
-            ApplicationDB db = new ApplicationDB();
-            Connection con = db.getConnection();
-            String deleteQuery = "DELETE FROM customer_representatives WHERE id = ?";
-            PreparedStatement stmt = con.prepareStatement(deleteQuery);
-            stmt.setInt(1, repId);
-
-            int rowsAffected = stmt.executeUpdate();
-            if (rowsAffected > 0) {
-                out.println("<p>Representative deleted successfully!</p>");
-            } else {
-                out.println("<p>Error deleting representative.</p>");
-            }
-            db.closeConnection(con);
-        }
-    %>
-
+	    String message = request.getParameter("message");
+	    if (message != null) {
+	        out.println("<p style='color: white;'>" + message + "</p>");
+	    }
+	%>
 </body>
 </html>
