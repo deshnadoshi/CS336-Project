@@ -16,6 +16,14 @@
             margin: 20px 0;
             border-bottom: 2px solid #ccc;
         }
+        .search-bar {
+            margin-bottom: 20px;
+        }
+        .search-bar input {
+            padding: 10px;
+            width: 300px;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -25,6 +33,10 @@
             <input type="submit" value="Logout" class="logout-button" onclick="showLogoutAlert();">
         </form>
     </div>
+    
+    
+    <div class="section-divider"></div>
+  
 
     <h2 class="centered-message">
         Welcome, <%= request.getParameter("firstName") %> <%= request.getParameter("lastName") %>!
@@ -171,9 +183,114 @@
         </table>
     </div>
     <div class="section-divider"></div> <!-- Divider -->
+    
+      <!-- Manage Train Schedules Section -->
+    <div class="stats-section">
+        <h3>Train Schedules</h3>
+        <!-- Display Train Schedules Table -->
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Train Name</th>
+                    <th>Departure Time</th>
+                    <th>Arrival Time</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% 
+                    // Create a new instance of ApplicationDB
+                    ApplicationDB db_sched = new ApplicationDB();
+                    Connection con_sched = db.getConnection();
+                    
+                    // Query to get all train schedules
+                    String query = "SELECT schedule_id, train_name, departure_time, arrival_time FROM train_schedules";
+                    Statement stmt_sched = con.createStatement();
+                    ResultSet rs_sched = stmt.executeQuery(query);
+
+                    // Display train schedules
+                    while (rs_sched.next()) {
+                        int scheduleId = rs_sched.getInt("schedule_id");
+                        String trainName = rs_sched.getString("train_name");
+                        String departureTime = rs_sched.getString("departure_time");
+                        String arrivalTime = rs_sched.getString("arrival_time");
+                %>
+                <tr>
+                    <td><%= trainName %></td>
+                    <td><%= departureTime %></td>
+                    <td><%= arrivalTime %></td>
+                    <td>
+                        <!-- Edit Button -->
+                        <a href="editTrainSchedule.jsp?schedule_id=<%= scheduleId %>" class="manage-button">Edit</a> |
+                        
+                        <!-- Delete Button -->
+                        <a href="deleteTrainSchedule.jsp?schedule_id=<%= scheduleId %>" onclick="return confirm('Are you sure you want to delete this schedule?');" class="manage-button">Delete</a>
+                    </td>
+                </tr>
+                <% 
+                    }
+                    db.closeConnection(con);  // Close the database connection
+                %>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section-divider"></div> <!-- Divider -->
+    
+        <h2>Browse Questions and Answers</h2>
+    
+    <!-- Search Bar for Questions -->
+     <div class="stats-section">
+    <div class="search-bar">
+        <form action="browseQuestions.jsp" method="get">
+            <input type="text" name="keyword" placeholder="Search for a question..." value="<%= request.getParameter("keyword") != null ? request.getParameter("keyword") : "" %>">
+            <input type="submit" value="Search">
+        </form>
+    </div>
+
+    <!-- Display Questions and Answers -->
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Question</th>
+                <th>Answer</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% 
+                String keyword = request.getParameter("keyword");
+
+                // Create a new instance of ApplicationDB
+                ApplicationDB db4 = new ApplicationDB();
+                Connection con4 = db.getConnection();
+
+                // SQL query to get questions and answers, with optional filtering by keyword
+                String query_ques = "SELECT question, answer FROM faq WHERE question LIKE ? ORDER BY question";
+                PreparedStatement stmt_ques = con.prepareStatement(query);
+                stmt_ques.setString(1, "%" + (keyword != null ? keyword : "") + "%");  // Search by keyword
+                ResultSet rs_ques = stmt_ques.executeQuery();
+
+                while (rs_ques.next()) {
+                    String question = rs_ques.getString("question");
+                    String answer = rs_ques.getString("answer");
+            %>
+                <tr>
+                    <td><%= question %></td>
+                    <td><%= answer %></td>
+                </tr>
+            <% 
+                }
+                db.closeConnection(con);  // Close connection
+            %>
+        </tbody>
+    </table>
+    </div>
 
     <h3>Manage Customer Representatives</h3>
     <!-- Admin can manage customer representatives (Add, Edit, Delete) -->
     <a href="manageRepresentative.jsp" class="manage-button">Manage Representatives</a>
+    
+    <h3>Customer Sales Report</h3>
+    <a href="representativeSalesReport.jsp" class="manage-button">Monthly Sales Report</a>
 </body>
 </html>
