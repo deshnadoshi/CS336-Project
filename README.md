@@ -28,4 +28,4 @@ ___
 
 Design Specifications: 
 
-- 
+- (add in the point about the sales report being the month of the reservation instead of the month the reservation was made)
