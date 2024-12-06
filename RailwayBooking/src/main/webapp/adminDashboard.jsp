@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
+<%@ page import = 'java.text.DecimalFormat'%>
 <%@ page import="com.trains.pkg.ApplicationDB" %>
 <!DOCTYPE html>
 <html>
@@ -114,12 +115,17 @@
                     while (rsByLine.next()) {
                         String lineName = rsByLine.getString("line_name");
                         int reservationCount = rsByLine.getInt("reservation_count");
+                        
+                        DecimalFormat df = new DecimalFormat("#.00");
                         double totalRevenue = rsByLine.getDouble("total_revenue");
+                        String totalRevenueStr = df.format(totalRevenue);
+
+
                 %>
                 <tr>
                     <td><%= lineName %></td>
                     <td><%= reservationCount %></td>
-                    <td>$<%= totalRevenue %></td>
+                    <td>$<%= totalRevenueStr %></td>
                 </tr>
                 <% 
                     }
@@ -156,12 +162,16 @@
                     while (rsByCustomer.next()) {
                         String customerName = rsByCustomer.getString("portfolio_username");
                         int customerReservationCount = rsByCustomer.getInt("reservation_count");
+                        
+                        DecimalFormat df = new DecimalFormat("#.00");
                         double customerRevenue = rsByCustomer.getDouble("total_revenue");
+                        String customerRevenueStr = df.format(customerRevenue); 
+
                 %>
                 <tr>
                     <td><%= customerName %></td>
                     <td><%= customerReservationCount %></td>
-                    <td>$<%= customerRevenue %></td>
+                    <td>$<%= customerRevenueStr %></td>
                 </tr>
                 <% 
                     }
@@ -175,5 +185,12 @@
     <h3>Manage Customer Representatives</h3>
     <!-- Admin can manage customer representatives (Add, Edit, Delete) -->
     <a href="manageRepresentative.jsp" class="manage-button">Manage Representatives</a>
+    
+    <div class="section-divider"></div> <!-- Divider -->
+    
+    <h4>Monthly Sales Report</h4>
+    <a href="representativeSalesReport.jsp" class="manage-button">View Monthly Sales Reports</a>
+    
+    
 </body>
 </html>
