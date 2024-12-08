@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
-<%@ page import = 'java.text.DecimalFormat'%>
+<%@ page import='java.text.DecimalFormat'%>
 <%@ page import="com.trains.pkg.ApplicationDB" %>
 <!DOCTYPE html>
 <html>
@@ -119,8 +119,6 @@
                         DecimalFormat df = new DecimalFormat("#.00");
                         double totalRevenue = rsByLine.getDouble("total_revenue");
                         String totalRevenueStr = df.format(totalRevenue);
-
-
                 %>
                 <tr>
                     <td><%= lineName %></td>
@@ -190,7 +188,67 @@
     
     <h4>Monthly Sales Report</h4>
     <a href="representativeSalesReport.jsp" class="manage-button">View Monthly Sales Reports</a>
+
+    <div class="section-divider"></div> <!-- Divider -->
     
+    <!-- New Section: Display Reservations by Transit Line Name -->
+    <div class="stats-section">
+        <h3>View Reservations by Transit Line</h3>
+        <form action="adminViewReservations.jsp" method="get">
+            <label for="line_name">Select Transit Line:</label>
+            <select name="line_name" id="line_name">
+                <option value="" disabled selected>Select a transit line</option>
+                <% 
+                    ApplicationDB db4 = new ApplicationDB();
+                    Connection con4 = db4.getConnection();
+
+                    String transitLinesQuery = "SELECT DISTINCT line_name FROM reservations";
+                    Statement stmt4 = con4.createStatement();
+                    ResultSet rs4 = stmt4.executeQuery(transitLinesQuery);
+
+                    while (rs4.next()) {
+                        String lineName = rs4.getString("line_name");
+                %>
+                <option value="<%= lineName %>"><%= lineName %></option>
+                <% 
+                    }
+                    db4.closeConnection(con4);
+                %>
+            </select>
+            <input type="submit" value="View Reservations">
+        </form>
+    </div>
     
+    <div class="section-divider"></div> <!-- Divider -->
+    
+    <!-- New Section: Display Reservations by Customer Name -->
+    <div class="stats-section">
+        <h3>View Reservations by Customer</h3>
+        <form action="adminViewReservations.jsp" method="get">
+            <label for="portfolio_username">Select Customer:</label>
+            <select name="portfolio_username" id="portfolio_username">
+                <option value="" disabled selected>Select a customer</option>
+                <% 
+                    ApplicationDB db5 = new ApplicationDB();
+                    Connection con5 = db5.getConnection();
+
+                    String customersQuery = "SELECT DISTINCT portfolio_username FROM reservations";
+                    Statement stmt5 = con5.createStatement();
+                    ResultSet rs5 = stmt5.executeQuery(customersQuery);
+
+                    while (rs5.next()) {
+                        String customerName = rs5.getString("portfolio_username");
+                %>
+                <option value="<%= customerName %>"><%= customerName %></option>
+                <% 
+                    }
+                    db5.closeConnection(con5);
+                %>
+            </select>
+            <input type="submit" value="View Reservations">
+        </form>
+    </div>
+
 </body>
 </html>
+                    

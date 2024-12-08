@@ -131,5 +131,50 @@
             out.println("Error: " + e.getMessage());
         }
     %>
+
+    <!-- New Section: FAQ - Browse Questions and Answers -->
+    <h3>Browse Questions and Answers</h3>
+    <%
+        try {
+            ApplicationDB db = new ApplicationDB();
+            Connection con = db.getConnection();
+            String faqQuery = "SELECT question, answer FROM faq";
+            Statement faqStmt = con.createStatement();
+            ResultSet faqRs = faqStmt.executeQuery(faqQuery);
+            
+            while (faqRs.next()) {
+                String question = faqRs.getString("question");
+                String answer = faqRs.getString("answer");
+    %>
+                <div class="faq">
+                    <p><strong>Question:</strong> <%= question %></p>
+                    <p><strong>Answer:</strong> <%= answer %></p>
+                </div>
+                <hr> <!-- Divider between each FAQ -->
+    <%
+            }
+            faqRs.close();
+            faqStmt.close();
+        } catch (Exception e) {
+            out.println("Error: " + e.getMessage());
+        }
+    %>
+
+    <!-- New Section: Search Questions by Keywords -->
+    <h3>Search Questions</h3>
+    <form action="searchFaq.jsp" method="get">
+        <label for="keyword">Enter Keyword:</label>
+        <input type="text" id="keyword" name="keyword" required>
+        <input type="submit" value="Search">
+    </form>
+
+    <!-- New Section: Send a Question to Customer Service -->
+    <h3>Send a Question to Customer Service</h3>
+    <form action="sendQuestion.jsp" method="post">
+        <label for="question">Your Question:</label>
+        <input type="text" id="question" name="question" required>
+        <input type="submit" value="Submit">
+    </form>
+
 </body>
 </html>

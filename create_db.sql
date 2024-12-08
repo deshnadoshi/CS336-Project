@@ -96,7 +96,7 @@ CREATE TABLE `faq` (
 
 LOCK TABLES `faq` WRITE;
 /*!40000 ALTER TABLE `faq` DISABLE KEYS */;
-INSERT INTO `faq` VALUES ('dd1035','How can I make a new account?','A customer representative will answer this question shortly.',NULL),('dd1035','How many reservations can I make?','There is no limit.','maria'),('dd1035','What types of discounts are available?','Child - 25%. Senior - 30%. Disabled - 50%.','jasmine'),('dd1035?','Can I make multiple reservations for one passenger?','A customer representative will answer this question shortly.',NULL),('ps1173','How can I cancel a reservation?','A customer representative will answer this question shortly.',NULL),('ps1173','How can I make a new reservation?','A customer representative will answer this question shortly.',NULL),('ps1173','Who can I contact to edit my account information?','A customer representative will answer this question shortly.',NULL);
+INSERT INTO `faq` VALUES ('dd1035','How can I make a new account?','On our login page, there is an option to register a user.','maria'),('dd1035','How do I apply a discount?','A customer representative will answer this question shortly.',NULL),('dd1035','How many reservations can I make?','There is no limit.','maria'),('dd1035','What types of discounts are available?','Child - 25%. Senior - 30%. Disabled - 50%.','jasmine'),('dd1035?','Can I make multiple reservations for one passenger?','A customer representative will answer this question shortly.',NULL),('ps1173','How can I cancel a reservation?','A customer representative will answer this question shortly.',NULL),('ps1173','How can I make a new reservation?','A customer representative will answer this question shortly.',NULL),('ps1173','Who can I contact to edit my account information?','A customer representative will answer this question shortly.',NULL);
 /*!40000 ALTER TABLE `faq` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -265,4 +265,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-08 10:38:43
+-- Dump completed on 2024-12-08 14:07:22
