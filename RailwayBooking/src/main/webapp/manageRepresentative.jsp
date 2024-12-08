@@ -129,6 +129,16 @@
     <%
         }
     %>
+    <h3>Edit or Delete Train Schedules</h3>
+    <form action="processManageRepresentative.jsp" method="post">
+        <label for="trainId">Train ID:</label>
+        <input type="text" name="trainId" required><br>
+        <label for="newSchedule">New Schedule (optional):</label>
+        <input type="text" name="newSchedule"><br>
+        <button type="submit" name="action" value="edit_schedule">Edit Schedule</button>
+        <button type="submit" name="action" value="delete_schedule">Delete Schedule</button>
+    </form>
+    
     <%
 	    String message = request.getParameter("message");
 	    if (message != null) {
