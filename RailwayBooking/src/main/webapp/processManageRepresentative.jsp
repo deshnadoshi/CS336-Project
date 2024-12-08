@@ -74,6 +74,30 @@
             int rowsDeleted = stmt.executeUpdate();
             message = (rowsDeleted > 0) ? "Representative deleted successfully!" : "Failed to delete representative.";
         }
+        
+        else if ("edit_schedule".equalsIgnoreCase(action)) {
+            String trainId = request.getParameter("trainId");
+            String newSchedule = request.getParameter("newSchedule");
+
+            String editScheduleQuery = "UPDATE TrainSchedules SET Schedule = ? WHERE TrainID = ?";
+            stmt = conn.prepareStatement(editScheduleQuery);
+            stmt.setString(1, newSchedule);
+            stmt.setString(2, trainId);
+
+            int rowsUpdated = stmt.executeUpdate();
+            message = (rowsUpdated > 0) ? "Train schedule updated successfully!" : "Failed to update train schedule.";
+        }
+        
+        else if ("delete_schedule".equalsIgnoreCase(action)) {
+            String trainId = request.getParameter("trainId");
+
+            String deleteScheduleQuery = "DELETE FROM TrainSchedules WHERE TrainID = ?";
+            stmt = conn.prepareStatement(deleteScheduleQuery);
+            stmt.setString(1, trainId);
+
+            int rowsDeleted = stmt.executeUpdate();
+            message = (rowsDeleted > 0) ? "Train schedule deleted successfully!" : "Failed to delete train schedule.";
+        }
     } catch (Exception e) {
         e.printStackTrace();
         message = "Error: " + e.getMessage();
