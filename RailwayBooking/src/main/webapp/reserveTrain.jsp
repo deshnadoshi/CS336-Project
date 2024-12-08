@@ -93,34 +93,6 @@
             }
         }
     }
-    String customerQuestion = request.getParameter("customerQuestion");
-    if (customerQuestion != null && !customerQuestion.isEmpty()) {
-        Connection conn = null;
-        PreparedStatement ps = null;
-
-        try {
-            ApplicationDB db = new ApplicationDB();
-            conn = db.getConnection();
-
-            String insertQuery = "INSERT INTO CustomerQueries (CustomerID, Question, Status) VALUES (?, ?, 'Pending')";
-            ps = conn.prepareStatement(insertQuery);
-            ps.setString(1, username);
-            ps.setString(2, customerQuestion);
-            int rows = ps.executeUpdate();
-
-            if (rows > 0) {
-                message = "Your question has been submitted successfully!";
-            } else {
-                message = "Failed to submit your question.";
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            message = "Error: " + e.getMessage();
-        } finally {
-            if (ps != null) try { ps.close(); } catch (SQLException ignore) {}
-            if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
-        }
-    }
 %>
 
 <!DOCTYPE html>
@@ -175,11 +147,5 @@
     <% } else if (message != "") { %>
         <h3><%= message %></h3>
     <% } %>
-    <h2>Ask a Question</h2>
-    <form action="processQuestion.jsp" method="POST">
-        <label for="customerQuestion">Your Question:</label><br>
-        <textarea id="customerQuestion" name="customerQuestion" rows="4" cols="50" required></textarea><br>
-        <input type="submit" value="Submit Question">
-    </form>
 </body>
 </html>

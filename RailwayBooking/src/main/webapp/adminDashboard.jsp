@@ -180,63 +180,6 @@
             </tbody>
         </table>
     </div>
-    <h3>Search Reservations by Transit Line and Date</h3>
-    <form action="adminDashboard.jsp" method="GET">
-        <label for="line">Transit Line:</label>
-        <input type="text" id="line" name="line" required><br><br>
-        <label for="date">Date:</label>
-        <input type="date" id="date" name="date" required><br><br>
-        <button type="submit">Search</button>
-    </form>
-
-    <% 
-    String line = request.getParameter("line");
-    String date = request.getParameter("date");
-    if (line != null && date != null) {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        try {
-            conn = new ApplicationDB().getConnection();
-            String reservationQuery = "SELECT portfolio_username, total_fare FROM reservations WHERE line_name = ? AND res_datetime = ?";
-            ps = conn.prepareStatement(reservationQuery);
-            ps.setString(1, line);
-            ps.setString(2, date);
-            rs = ps.executeQuery();
-
-            if (rs.isBeforeFirst()) { %>
-                <h4>Reservations for Transit Line: <%= line %> on <%= date %></h4>
-                <table border="1">
-                    <thead>
-                        <tr>
-                            <th>Customer Name</th>
-                            <th>Total Fare</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <% while (rs.next()) { %>
-                        <tr>
-                            <td><%= rs.getString("portfolio_username") %></td>
-                            <td>$<%= rs.getFloat("total_fare") %></td>
-                        </tr>
-                    <% } %>
-                    </tbody>
-                </table>
-            <% } else { %>
-                <p>No reservations found for the specified transit line and date.</p>
-            <% } %>
-    <% 
-        } catch (Exception e) {
-            e.printStackTrace();
-            out.println("<p>Error: " + e.getMessage() + "</p>");
-        } finally {
-            if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
-            if (ps != null) try { ps.close(); } catch (SQLException ignore) {}
-            if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
-        }
-    }
-    %>
     <div class="section-divider"></div> <!-- Divider -->
 
     <h3>Manage Customer Representatives</h3>
