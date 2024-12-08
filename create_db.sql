@@ -75,6 +75,32 @@ INSERT INTO `employees` VALUES (111111111,'Administrator','Login','admin','admin
 UNLOCK TABLES;
 
 --
+-- Table structure for table `faq`
+--
+
+DROP TABLE IF EXISTS `faq`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `faq` (
+  `customer_id` varchar(10) NOT NULL,
+  `question` varchar(255) NOT NULL,
+  `answer` varchar(255) DEFAULT 'A customer representative will answer this question shortly.',
+  `rep_username` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`customer_id`,`question`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `faq`
+--
+
+LOCK TABLES `faq` WRITE;
+/*!40000 ALTER TABLE `faq` DISABLE KEYS */;
+INSERT INTO `faq` VALUES ('dd1035','How can I make a new account?','A customer representative will answer this question shortly.',NULL),('dd1035','How many reservations can I make?','There is no limit.','maria'),('dd1035','What types of discounts are available?','Child - 25%. Senior - 30%. Disabled - 50%.','jasmine'),('dd1035?','Can I make multiple reservations for one passenger?','A customer representative will answer this question shortly.',NULL),('ps1173','How can I cancel a reservation?','A customer representative will answer this question shortly.',NULL),('ps1173','How can I make a new reservation?','A customer representative will answer this question shortly.',NULL),('ps1173','Who can I contact to edit my account information?','A customer representative will answer this question shortly.',NULL);
+/*!40000 ALTER TABLE `faq` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `reservations`
 --
 
@@ -239,4 +265,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-06 12:59:13
+-- Dump completed on 2024-12-08 10:38:43
