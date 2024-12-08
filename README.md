@@ -32,3 +32,4 @@ Design Specifications:
 - (changing username and password to connect to the sql db)
 - (demo video doesn't show edge cases/invalid cases, weve tested this already demo video NOT ENUF TIME to fit everything in)
 - reservation statsu explanation -- customer rep changes = changed, customer rep deltes trainschedu or user deletes = cancelled
+- we're doing top 5 per month
