@@ -33,3 +33,4 @@ Design Specifications:
 - (demo video doesn't show edge cases/invalid cases, weve tested this already demo video NOT ENUF TIME to fit everything in)
 - reservation statsu explanation -- customer rep changes = changed, customer rep deltes trainschedu or user deletes = cancelled
 - we're doing top 5 per month
+- for ^^ this sample data doesn't always have top 5 transit lines, it ranks the lines it does have
