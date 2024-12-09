@@ -41,11 +41,11 @@
         try {
             ApplicationDB db = new ApplicationDB();
             Connection con = db.getConnection();
-            String currentQuery = "SELECT r.res_number, r.res_datetime, r.total_fare, r.is_roundtrip, r.discount_type, s1.name AS origin_name, s2.name AS destination_name, r.line_name " +
+            String currentQuery = "SELECT r.status, r.res_number, r.res_datetime, r.total_fare, r.is_roundtrip, r.discount_type, s1.name AS origin_name, s2.name AS destination_name, r.line_name " +
                                   "FROM reservations r " +
                                   "JOIN stations s1 ON r.res_origin_station_id = s1.station_id " +
                                   "JOIN stations s2 ON r.res_destination_station_id = s2.station_id " +
-                                  "WHERE r.portfolio_username = ? AND r.status = 'CONFIRMED' AND r.res_datetime >= CURDATE()";
+                                  "WHERE r.portfolio_username = ? AND (r.status = 'CONFIRMED' OR r.status = 'CHANGED') AND r.res_datetime >= CURDATE() ";
             PreparedStatement currentStmt = con.prepareStatement(currentQuery);
             currentStmt.setString(1, username);
             ResultSet currentRs = currentStmt.executeQuery();
@@ -59,6 +59,8 @@
                 String originName = currentRs.getString("origin_name");
                 String destinationName = currentRs.getString("destination_name");
                 String lineName = currentRs.getString("line_name");
+                String status = currentRs.getString("status");
+
                 
     %>
                 <div class="reservation">
@@ -70,6 +72,7 @@
                     <p><strong>Total Fare:</strong> $<%= totalFare %></p>
                     <p><strong>Discount Type:</strong> <%= discountType %></p>
                     <p><strong>Roundtrip:</strong> <%= isRoundtrip ? "Yes" : "No" %></p>
+                    <p><strong>Status:</strong> <%= status %></p>
                     <form action="cancelReservation.jsp" method="post" onsubmit="showCancelAlert();">
                         <input type="hidden" name="resNumber" value="<%= resNumber %>">
                         <input type="submit" value="Cancel Reservation">

@@ -27,7 +27,7 @@
 
     <div class="section-divider"></div> <!-- Divider -->
     
-    <!-- New Section: Train Schedules Management -->
+    <!-- Train Schedules Management -->
     <h3>Manage Train Schedules</h3>
     <form action="manageTrainSchedules.jsp" method="post">
         <label for="line_name">Select Line Name:</label>
@@ -36,7 +36,7 @@
                 try {
                     ApplicationDB db = new ApplicationDB();
                     Connection con = db.getConnection();
-                    String query = "SELECT line_name FROM trainschedules";
+                    String query = "SELECT line_name FROM trainschedules WHERE is_operational = 1";
                     Statement stmt = con.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
                     
@@ -91,7 +91,7 @@
 
     <div class="section-divider"></div> <!-- Divider -->
 
-    <!-- New Section: Customers with Reservations -->
+    <!-- Customers with Reservations -->
     <h3>Customers with Reservations on a Given Line and Date</h3>
     <form action="viewReservations.jsp" method="post">
         <label for="line_name">Select Line Name:</label>
@@ -100,7 +100,7 @@
                 try {
                     ApplicationDB db = new ApplicationDB();
                     Connection con = db.getConnection();
-                    String query = "SELECT line_name FROM trainschedules";
+                    String query = "SELECT line_name FROM trainschedules WHERE is_operational = 1";
                     Statement stmt = con.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
                     
@@ -124,7 +124,7 @@
 
     <div class="section-divider"></div> <!-- Divider -->
     
-    <!-- Existing Section: Respond to Customer Questions -->
+    <!-- Respond to Customer Questions -->
     <h3>Respond to Customer Questions</h3>
     <%
         try {

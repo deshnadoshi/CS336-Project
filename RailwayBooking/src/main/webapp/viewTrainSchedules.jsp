@@ -30,6 +30,7 @@
                 Timestamp trainArrivalTime = rs.getTimestamp("train_arrival_time");
                 Timestamp trainDepartureTime = rs.getTimestamp("train_departure_time");
                 int travelTime = rs.getInt("travel_time");
+                int isOperational = rs.getInt("is_operational"); 
     %>
                 <li>
                     <strong>Line Name:</strong> <%= lineName %><br>
@@ -38,6 +39,7 @@
                     <strong>Arrival Time:</strong> <%= trainArrivalTime %><br>
                     <strong>Departure Time:</strong> <%= trainDepartureTime %><br>
                     <strong>Travel Time:</strong> <%= travelTime %> minutes<br>
+                    <strong>Operational Status:</strong> <%= isOperational == 1 ? "Confirmed" : "Cancelled" %> <br>
                 </li>
                 <hr>
     <%

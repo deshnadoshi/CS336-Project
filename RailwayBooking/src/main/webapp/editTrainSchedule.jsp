@@ -13,7 +13,6 @@
         ApplicationDB db = new ApplicationDB();
         Connection con = db.getConnection();
         
-        // Retrieve train schedule details
         String trainScheduleQuery = "SELECT * FROM trainschedules WHERE line_name = ?";
         PreparedStatement ps1 = con.prepareStatement(trainScheduleQuery);
         ps1.setString(1, lineName);
@@ -41,7 +40,6 @@
         rs1.close();
         ps1.close();
 
-        // Retrieve stops details and join with stations table
         String stopsAtQuery = "SELECT stops_at.*, stations.name AS station_name FROM stops_at JOIN stations ON stops_at.station_id = stations.station_id WHERE stops_at.line_name = ?";
         PreparedStatement ps2 = con.prepareStatement(stopsAtQuery);
         ps2.setString(1, lineName);

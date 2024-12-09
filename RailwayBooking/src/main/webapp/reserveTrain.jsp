@@ -13,7 +13,6 @@
     String firstName = (String) currentsession.getAttribute("firstName");
     String lastName = (String) currentsession.getAttribute("lastName");
 
-    // Initialize reservation form variables
     String lineName = request.getParameter("lineName");
     String origin = request.getParameter("origin");
     String destination = request.getParameter("destination");
@@ -22,7 +21,6 @@
     String arrivalTime = request.getParameter("arrivalTime");
     int fare = Integer.parseInt(request.getParameter("fare"));
 
-    // Variables for reservation logic
     int resNumber = 0;
     java.sql.Date resDate = null;
     String discountType = null;
@@ -31,13 +29,10 @@
     boolean reservationCreated = false;
     String message = "";
 
-    // Execute reservation logic only when the form is submitted (POST request with specific inputs)
     if ("POST".equalsIgnoreCase(request.getMethod()) && request.getParameter("discountType") != null) {
-        // Generate random reservation number
         Random rand = new Random();
         resNumber = 100000 + rand.nextInt(900000);
         
-        // Parse the date
         try {
             resDate = java.sql.Date.valueOf(date);
         } catch (IllegalArgumentException e) {
@@ -45,11 +40,9 @@
         }
 
         if (resDate != null) {
-            // Retrieve additional parameters
             discountType = request.getParameter("discountType");
             isRoundtrip = request.getParameter("isRoundtrip") != null;
 
-            // Calculate total fare based on discounts and roundtrip
             if ("child".equals(discountType)) {
                 totalFare *= 0.75;
             } else if ("senior".equals(discountType)) {
@@ -62,7 +55,6 @@
                 totalFare *= 2;
             }
 
-            // Add reservation to the database
             try {
                 ApplicationDB db = new ApplicationDB();
                 Connection con = db.getConnection();
@@ -142,7 +134,7 @@
         <p>Departure Time: <%= departureTime %></p>
         <p>Arrival Time: <%= arrivalTime %></p>
         <p>Fare: $<%= totalFare %></p>
-        <p>Discount Type: <%= discountType != null ? discountType : "None" %></p>
+        <p>Discount Type: <%= discountType.isEmpty() == false ? discountType : "None" %></p>
         <p>Roundtrip:<%= isRoundtrip ? "Yes" : "No" %></p>
     <% } else if (message != "") { %>
         <h3><%= message %></h3>

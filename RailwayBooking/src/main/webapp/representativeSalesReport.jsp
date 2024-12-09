@@ -27,7 +27,6 @@
                     ApplicationDB db = new ApplicationDB();
                     conn = db.getConnection();
 
-                    // Query to calculate the sum of total_fare grouped by month
                     String query = "SELECT DATE_FORMAT(res_datetime, '%Y-%m') AS month, SUM(total_fare) AS total_sales " +
                                    "FROM reservations " +
                                    "WHERE status = 'CONFIRMED' " + 
@@ -37,7 +36,6 @@
                     stmt = conn.prepareStatement(query);
                     rs = stmt.executeQuery();
 
-                    // Loop through the result set and display the data in the table
                     while (rs.next()) {
                         String month = rs.getString("month");
                         float totalSales = rs.getFloat("total_sales");

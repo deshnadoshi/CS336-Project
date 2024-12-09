@@ -20,7 +20,9 @@
                 searchStmt.setString(1, "%" + keyword + "%");
                 ResultSet searchRs = searchStmt.executeQuery();
                 
+                boolean hasResults = false;
                 while (searchRs.next()) {
+                    hasResults = true;
                     String question = searchRs.getString("question");
                     String answer = searchRs.getString("answer");
     %>
@@ -30,6 +32,9 @@
                     </div>
                     <hr> <!-- Divider between each FAQ -->
     <%
+                }
+                if (!hasResults) {
+                    out.println("<p>No results found matching \"" + keyword + "\".</p>");
                 }
                 searchRs.close();
                 searchStmt.close();

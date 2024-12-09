@@ -138,7 +138,7 @@
                                    "JOIN stops_at sa2 ON ts.line_name = sa2.line_name " +
                                    "JOIN stations s1 ON sa1.station_id = s1.station_id " +
                                    "JOIN stations s2 ON sa2.station_id = s2.station_id " +
-                                   "WHERE sa1.station_id = ? AND sa2.station_id = ? " +
+                                   "WHERE is_operational = '1' AND sa1.station_id = ? AND sa2.station_id = ? " +
                                    orderByClause;
                     PreparedStatement ps = con.prepareStatement(query);
                     ps.setInt(1, Integer.parseInt(origin));

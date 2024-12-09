@@ -32,61 +32,83 @@
     </h2>
 
     <!-- Display Best Customer and Most Active Transit Lines Section -->
-    <div class="stats-section">
-        <h3>Top Stats</h3>
-        <div class="stats-box">
-            <% 
-                // Create a new instance of ApplicationDB
-                ApplicationDB db = new ApplicationDB();
-                Connection con = db.getConnection();
+	<div class="stats-section">
+	    <h4>Top Stats:</h4>
+	    <div class="stats-box">
+	        <% 
+	            ApplicationDB db = new ApplicationDB();
+	            Connection con = db.getConnection();
+	
+	            String bestCustomerQuery = "SELECT portfolio_username, SUM(total_fare) AS total_spent " +
+	                                       "FROM reservations " +
+	                                       "GROUP BY portfolio_username " +
+	                                       "ORDER BY total_spent DESC LIMIT 1";
+	
+	            Statement stmt = con.createStatement();
+	            ResultSet rs = stmt.executeQuery(bestCustomerQuery);
+	
+	            if (rs.next()) {
+	                String bestCustomer = rs.getString("portfolio_username");
+	                double totalSpent = rs.getDouble("total_spent");
+	        %>
+	                <h4>Best Customer:</h4>
+	                <p><%= bestCustomer %> (Total Spent: $<%= new DecimalFormat("#.00").format(totalSpent) %>)</p>
+	        <%
+	            }
+	
+	            String activeLinesQuery = "SELECT line_name, DATE_FORMAT(res_datetime, '%Y-%m') AS month, COUNT(*) AS reservation_count " +
+	                                      "FROM reservations " +
+	                                      "GROUP BY line_name, month " +
+	                                      "ORDER BY month DESC, reservation_count DESC";
+	
+	            rs = stmt.executeQuery(activeLinesQuery);
+	
+	        %>
+	        <h4>Most Active Transit Lines:</h4>
+	        <ul>
+	            <% 
+	                String currentMonth = "";
+	                int rank = 0;
+	
+	                while (rs.next()) {
+	                    String lineName = rs.getString("line_name");
+	                    String month = rs.getString("month");
+	                    int reservationCount = rs.getInt("reservation_count");
+	
+	                    if (!month.equals(currentMonth)) {
+	                        if (!currentMonth.isEmpty()) {
+	            %>
+	                            </ul>
+	            <%
+	                        }
+	                        currentMonth = month;
+	                        rank = 0;
+	            %>
+	                        <h5>Month: <%= month %></h5>
+	                        <ul>
+	            <%
+	                    }
+	
+	                    if (rank < 5) {
+	                        rank++;
+	            %>
+	                        <li><%= lineName %> (Reservations: <%= reservationCount %>)</li>
+	            <%
+	                    }
+	                }
+	
+	                if (rank > 0) {
+	            %>
+	                    </ul>
+	            <%
+	                }
+	
+	                
+	                db.closeConnection(con);
+	            %>
+	    </div>
+	</div>
 
-                // Query to get the best customer (the customer with most reservations)
-                String bestCustomerQuery = "SELECT portfolio_username, COUNT(*) AS reservation_count " +
-                                           "FROM reservations " +
-                                           "GROUP BY portfolio_username " +
-                                           "ORDER BY reservation_count DESC LIMIT 1";
-                Statement stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery(bestCustomerQuery);
-
-                // Display Best Customer
-                if (rs.next()) {
-                    String bestCustomer = rs.getString("portfolio_username");
-                    int reservationCount = rs.getInt("reservation_count");
-            %>
-                <h4>Best Customer:</h4>
-                <p><%= bestCustomer %> (Reservations: <%= reservationCount %>)</p>
-            <% 
-                }
-
-                // Query to get the top 5 most active transit lines
-                String activeLinesQuery = "SELECT line_name, COUNT(*) AS reservation_count " +
-                                          "FROM reservations " +
-                                          "GROUP BY line_name " +
-                                          "ORDER BY reservation_count DESC LIMIT 5";
-                rs = stmt.executeQuery(activeLinesQuery);
-
-                // Display the top 5 active lines
-                if (rs.next()) {
-            %>
-                <h4>Most Active Transit Lines:</h4>
-                <ul>
-                    <% 
-                        do {
-                            String lineName = rs.getString("line_name");
-                            int activeLineCount = rs.getInt("reservation_count");
-                    %>
-                            <li><%= lineName %> (Reservations: <%= activeLineCount %>)</li>
-                    <% 
-                        } while (rs.next());
-                    %>
-                </ul>
-            <% 
-                }
-                // Close the connection
-                db.closeConnection(con);
-            %>
-        </div>
-    </div>
     <div class="section-divider"></div> <!-- Divider -->
 
     <!-- Reservations Section: Display Reservations by Transit Line -->
@@ -147,16 +169,13 @@
             </thead>
             <tbody>
                 <% 
-                    // Create a new instance of ApplicationDB
                     ApplicationDB db3 = new ApplicationDB();
                     Connection con3 = db3.getConnection();
 
-                    // Query to get reservations and revenue by customer name (portfolio_username)
                     String queryByCustomer = "SELECT portfolio_username, COUNT(*) AS reservation_count, SUM(total_fare) AS total_revenue FROM reservations GROUP BY portfolio_username";
                     Statement stmt3 = con3.createStatement();  // Use a new Statement object
                     ResultSet rsByCustomer = stmt3.executeQuery(queryByCustomer);
 
-                    // Display reservations and revenue by customer name
                     while (rsByCustomer.next()) {
                         String customerName = rsByCustomer.getString("portfolio_username");
                         int customerReservationCount = rsByCustomer.getInt("reservation_count");
@@ -173,7 +192,7 @@
                 </tr>
                 <% 
                     }
-                    db3.closeConnection(con3);  // Close connection after use
+                    db3.closeConnection(con3);  
                 %>
             </tbody>
         </table>
@@ -191,7 +210,7 @@
 
     <div class="section-divider"></div> <!-- Divider -->
     
-    <!-- New Section: Display Reservations by Transit Line Name -->
+    <!-- Display Reservations by Transit Line Name -->
     <div class="stats-section">
         <h3>View Reservations by Transit Line</h3>
         <form action="adminViewReservations.jsp" method="get">
@@ -221,7 +240,7 @@
     
     <div class="section-divider"></div> <!-- Divider -->
     
-    <!-- New Section: Display Reservations by Customer Name -->
+    <!-- Display Reservations by Customer Name -->
     <div class="stats-section">
         <h3>View Reservations by Customer</h3>
         <form action="adminViewReservations.jsp" method="get">
